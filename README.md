@@ -1,4 +1,4 @@
-# Product Management System
+# Dhar Hobe - A Bangladeshi Renting System
 ## Team Name: JU_High_Fives
 
 Batch 28, Department of CSE, Jahangirnagar University
