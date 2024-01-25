@@ -1,7 +1,8 @@
 # Dhar Hobe - A Bangladeshi Renting System
 ## Team Name: JU_High_Fives
 
-Batch 28, Department of CSE, Jahangirnagar University
+Batch 48, Department of Computer Science & Engineering, Jahangirnagar University, Bangladesh
+
 ## Team Members:
 
 1. Iffat Ara Sanzida (IA) - 344
