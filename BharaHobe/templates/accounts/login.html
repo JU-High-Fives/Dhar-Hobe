@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Argon - Login
+{% endblock %}
+
+{% block content %}
+
+{% if error %}
+{{ error }}
+<br />
+<br />
+{% endif %}
+
+<h3 class="text-primary text-center mt-5">Login!</h3>
+
+<form method="POST" action="{% url 'login' %}" class="w-50 m-auto m-5 mt-5">
+{% csrf_token %}
+
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Username</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1" name="username" >
+</div>
+
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Password</label>
+    <input type="password" class="form-control" id="exampleFormControlInput1" name="password" >
+</div>
+<input class="btn btn-primary mb-5" type="submit" value="Login" />
+</form>
+
+{% endblock %}
