@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+<h1>User Profile...</h1>
+<br />
+
+
+<div class="card mb-3">
+    <div class="row no-gutters">
+        
+        <div class="col-md-10">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ user.username }} <br>
+                    {{ user.email }}
+                </h5>
+
+                <p class="small text-muted">
+
+
+
+                    {% if page_user.website_url %}
+                    <a href="{{ page_user.website_url }}"> Website</a>
+                    {% endif %}
+
+
+                    {% if page_user.facebook_url %}
+                    | <a href="{{ page_user.facebook_url }}">Facebook</a>
+                    {% endif %}
+
+
+                    {% if page_user.twitter_url %}
+                    | <a href="{{ page_user.twitter_url }}">Twitter</a>
+                    {% endif %}
+
+
+                    {% if page_user.instagram_url %}
+                    | <a href="{{ page_user.instagram_url }}">Instagram</a>
+                    {% endif %}
+
+
+                    {% if page_user.pinterest_url %}
+                    | <a href="{{ page_user.pinterest_url }}">Pinterest</a>
+                    {% endif %}
+
+
+                </p>
+
+
+                <p class="card-text">
+                    {{ page_user.bio }}
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<br /><br />
+
+
+
+
+{% endblock %}

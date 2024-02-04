@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Argon - Signup
+{% endblock %}
+
+{% block content %}
+
+{% if error %}
+{{ error }}
+<br />
+<br />
+{% endif %}
+
+
+<section class="mt-5w-50 mx-auto">
+    <div class="signup-form">
+        <h2 class="text-primary text-center mt-5">Signup Now!</h2>
+        <form method="POST" action="{% url 'signup' %}" class="w-50 mt-5 mb-5 mx-auto">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Name</label>
+                <input type="text" class="form-control" name = "username">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Email</label>
+                <input type="email" class="form-control" name = "email">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Password</label>
+                <input type="password" class="form-control" name = "password1">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Conform Password</label>
+                <input type="password" class="form-control" name = "password2">
+            </div>
+            <p><span><input type="checkbox"></span> I agree to the terms and conditions</p>
+            <!-- <button type="btn" class="btn btn-primary">Signup</button> -->
+            <input class="btn btn-primary" type="submit" value="Sign Up!" />
+        </form>
+    </div>
+</section>
+
+
+{% endblock %}
