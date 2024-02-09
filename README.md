@@ -1,4 +1,4 @@
-# Bhara Hobe - A Bangladeshi Renting System
+# Dhar Hobe - A Bangladeshi Renting System
 ## Team Name: JU_High_Fives
 
 Batch 48, Department of Computer Science & Engineering, Jahangirnagar University, Bangladesh
