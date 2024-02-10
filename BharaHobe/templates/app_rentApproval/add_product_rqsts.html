@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+    <table class="tbl">
+        <tr id="header">
+            <th>Renter Name</th>
+            <th>Renter Email</th>
+            <th>Product Name</th>
+            <th>Product Description</th>
+            <th>Rental Price</th>
+            <th>Quantity</th>
+            <th>Approve</th>
+            <th>Disapprove</th>
+        </tr>
+    
+            {% for rqst in requests%}
+           <tr>
+            <td>{{rqst.renter.username}}</td>
+            <td>{{rqst.renter.email}}</td>
+            <td>{{rqst.product.name}}</td>
+            <td>{{rqst.product.description}}</td>
+            <td>{{rqst.product.rental_price}}</td>
+            <td>{{rqst.product.quantity_available}}</td>
+            <td><a class="btn btn-sm btn-info" href="#">Approve</a> </td>
+            <td><button type="button" class="btn btn-sm btn-danger"  >Disapprove</a> </td>
+    
+           </tr>
+           <!-- Delete Modal -->
+    
+        {% endfor %}
+    
+    </table>
+          
+    </div>
+{% endblock %}

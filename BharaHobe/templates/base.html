@@ -40,7 +40,7 @@
                     <img class="img-fluid rounded-circle" src="{% static 'rentapp/images/logo.jpg' %}" alt=""
                         width="40" height="30">
                 </a>
-                <a class="navbar-brand fs-4 text-info" href="{% url 'home' %}">Bhara Hobe</a>
+                <a class="navbar-brand fs-4 text-info" href="{% url 'home' %}">Dhar Hobe</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -80,10 +80,10 @@
 
                         {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'profile' %}">{{ user.username }}</a>
+                            <a class="nav-link text-white" href="#">{{ user.username }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'add-project' %}">Add Product</a>
+                            <a class="nav-link text-white" href="#">Add Product</a>
                         </li>
 
                         <li class="nav-item">
@@ -223,6 +223,7 @@
                         </p>
 
                         <p><i class="fas fa-print me-3 text-secondary"></i> +8801758311555</p>
+                        <p><i class="fas fa-print me-3 text-secondary"></i> +8801759958460</p>
                     </div>
                     <!-- Grid column -->
                 </div>
