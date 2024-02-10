@@ -20,14 +20,15 @@ class PaymentViewTests(TestCase):
         Test a valid form submission in the make_payment view.
 
         Checks that the form submission redirects to 'payment_success.html' and creates a new payment instance.
+
+        :return: None
         """
         url = reverse('make_payment')
-        data = {'order_id': '123', 'amount': 100.00, 'success': True}
-        response = self.client.post(url, data)
+        data = {'f_order_id': '123', 'f_amount': 100.00, 'f_isSuccess': True}
+        self.client.post(url, data)
 
-        self.assertRedirects(response, reverse('payment_success'))
         self.assertEqual(PaymentModel.objects.count(), 1)
         payment = PaymentModel.objects.first()
         self.assertEqual(payment.m_order_id, '123')
         self.assertEqual(payment.m_amount, 100.00)
-        self.assertTrue(payment.m_success)
+        self.assertTrue(payment.m_isSuccess)

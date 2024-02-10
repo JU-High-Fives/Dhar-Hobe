@@ -21,4 +21,15 @@ def make_payment(request):
 
     return render(request, 'make_payment.html', {'form': form})
 
+def payment_success(request):
+    """This function renders the payment success page.
+
+    Displays details of the successful payment.
+
+    Returns:
+        HttpResponse: Rendered template for payment success
+    """
+    latest_payment = PaymentModel.objects.filter(m_isSuccess=True).order_by('-id').first()
+
+    return render(request, 'payment_success.html', {'latest_payment': latest_payment})
 
