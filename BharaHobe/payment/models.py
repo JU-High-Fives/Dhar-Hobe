@@ -7,4 +7,9 @@ class PaymentModel(models.Model):
     m_timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Timestamp')
 
     def __str__(self):
+        """This functions returns the payment id 
+
+        Returns:
+            int: Payment ID 
+        """
         return f"Payment #{self.id}"

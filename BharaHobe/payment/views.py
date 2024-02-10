@@ -3,6 +3,11 @@ from .forms import paymentForm
 from .models import PaymentModel
 
 def make_payment(request):
+    """This functions renders to the make payment page and shows a payment form 
+
+    Returns:
+        form: Payment Form 
+    """
     if request.method == 'POST':
         form = paymentForm(request.POST)
         if form.is_valid():
