@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Delivery Request Details</title>
+</head>
+
+<body>
+    <h1>Delivery Request Details</h1>
+    <p><strong>User:</strong> {{ request.user.username }}</p>
+    <p><strong>Pickup Location:</strong> {{ request.pickup_location }}</p>
+    <p><strong>Delivery Destination:</strong> {{ request.delivery_destination }}</p>
+    <p><strong>Size/Weight:</strong> {{ request.size_weight }}</p>
+    <p><strong>Preferred Delivery Window:</strong> {{ request.preferred_delivery_window }}</p>
+    <p><strong>Special Instructions:</strong> {{ request.special_instructions }}</p>
+    <p><strong>Status:</strong> {{ request.status }}</p>
+</body>
+
+</html>

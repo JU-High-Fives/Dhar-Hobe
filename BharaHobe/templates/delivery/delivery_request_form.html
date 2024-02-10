@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>New Delivery Request</title>
+</head>
+
+<body>
+    <h1>New Delivery Request</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="pickup_location">Pickup Location:</label>
+        <input type="text" id="pickup_location" name="pickup_location" required>
+        <br>
+        <label for="delivery_destination">Delivery Destination:</label>
+        <input type="text" id="delivery_destination" name="delivery_destination" required>
+        <br>
+        <label for="size_weight">Size/Weight:</label>
+        <input type="text" id="size_weight" name="size_weight" required>
+        <br>
+        <label for="preferred_delivery_window">Preferred Delivery Window (optional):</label>
+        <input type="text" id="preferred_delivery_window" name="preferred_delivery_window">
+        <br>
+        <label for="special_instructions">Special Instructions (optional):</label>
+        <textarea id="special_instructions" name="special_instructions"></textarea>
+        <br>
+        <button type="submit">Submit Request</button>
+    </form>
+</body>
+
+</html>

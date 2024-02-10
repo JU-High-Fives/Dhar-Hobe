@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Delivery Requests</title>
+</head>
+
+<body>
+    <h1>Delivery Requests</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Pickup Location</th>
+                <th>Delivery Destination</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+            <tr>
+                <td>{{ request.user.username }}</td>
+                <td>{{ request.pickup_location }}</td>
+                <td>{{ request.delivery_destination }}</td>
+                <td>{{ request.status }}</td>
+                <td>
+                    <a href="{% url 'delivery_request_detail' request.pk %}">View Details</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
