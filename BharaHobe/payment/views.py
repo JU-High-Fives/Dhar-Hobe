@@ -19,6 +19,6 @@ def make_payment(request):
     else:
         form = paymentForm()
 
-    return render(request, 'make_payment2.html', {'form': form})
+    return render(request, 'make_payment.html', {'form': form})
 
 
