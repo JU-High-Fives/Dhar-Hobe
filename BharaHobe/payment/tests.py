@@ -32,3 +32,22 @@ class PaymentViewTests(TestCase):
         self.assertEqual(payment.m_order_id, '123')
         self.assertEqual(payment.m_amount, 100.00)
         self.assertTrue(payment.m_isSuccess)
+
+    def test_make_payment_form_invalid_submission(self):
+            """
+            Test an invalid form submission in the make_payment view.
+
+            Checks that the form submission returns a 200 OK status code, stays on the 'make_payment' page,
+            has form errors, and does not create a new payment instance.
+            """
+            url = reverse('make_payment')
+            data = {'order_id': '123', 'amount': 'invalid_amount', 'success': True}
+            response = self.client.post(url, data)
+
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed(response, 'make_payment.html')
+
+            form = response.context['form']
+            self.assertTrue(form.errors)
+
+            self.assertEqual(PaymentModel.objects.count(), 0)
