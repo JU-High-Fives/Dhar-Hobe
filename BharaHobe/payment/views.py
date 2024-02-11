@@ -3,6 +3,15 @@ from .forms import advancePaymentForm, monthlyPaymentForm, emiPaymentForm
 from .models import PaymentModel
 
 def select_payment_method_view(request):
+    """
+    View for selecting payment method.
+
+    If POST request, redirects to the chosen payment form,
+    else renders the payment method selection page.
+
+    Returns:
+        HttpResponse: Rendered template for payment method selection or redirect to payment form.
+    """
     if request.method == 'POST':
         selected_payment_method = request.POST.get('payment_method')
         if selected_payment_method == 'advance':
@@ -15,6 +24,15 @@ def select_payment_method_view(request):
     return render(request, 'payment_method_selection.html')
 
 def advance_payment_view(request):
+    """
+    View for handling advance payment form.
+
+    If POST request, processes form data, creates PaymentModel, and renders payment success page.
+    If GET request, renders the advance payment form.
+
+    Returns:
+        HttpResponse: Rendered template for advance payment form or payment success.
+    """
     if request.method == 'POST':
         form = advancePaymentForm(request.POST)
         if form.is_valid():
@@ -29,6 +47,15 @@ def advance_payment_view(request):
     return render(request, 'advance_payment_form.html', {'form': form})
 
 def monthly_payment_view(request):
+    """
+    View for handling monthly payment form.
+
+    If POST request, processes form data, creates PaymentModel, and renders payment success page.
+    If GET request, renders the monthly payment form.
+
+    Returns:
+        HttpResponse: Rendered template for monthly payment form or payment success.
+    """
     if request.method == 'POST':
         form = monthlyPaymentForm(request.POST)
         if form.is_valid():
@@ -44,6 +71,15 @@ def monthly_payment_view(request):
     return render(request, 'monthly_payment_form.html', {'form': form})
 
 def emi_payment_view(request):
+    """
+    View for handling EMI payment form.
+
+    If POST request, processes form data, creates PaymentModel, and renders payment success page.
+    If GET request, renders the EMI payment form.
+
+    Returns:
+        HttpResponse: Rendered template for EMI payment form or payment success.
+    """
     if request.method == 'POST':
         form = emiPaymentForm(request.POST)
         if form.is_valid():
