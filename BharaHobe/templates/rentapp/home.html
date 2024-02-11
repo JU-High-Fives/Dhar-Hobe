@@ -6,21 +6,27 @@ Bhara Hobe - Home
 {% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="styles/home.css"> -->
-</head>
-
-<body>
-    <div class="">
-
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">Bhara Hobe</a>
+        <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search_results' %}">
+            <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </div>
-</body>
+</nav>
+<!-- End Navbar -->
 
-</html>
+<div class="container">
+    <!-- Your home page content here -->
+</div>
 {% endblock %}
+<!-- In this code:
+
+    The {% url 'search_results' %} template tag generates the 
+    URL for the search results view, ensuring that the form submits 
+    the search query to the correct endpoint.
+    The form action is set to the generated URL, so when the user 
+    submits the search form, it will be handled by the appropriate 
+    view in your Django application. -->
