@@ -1,10 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Make a Payment</h2>
-    <form method="post" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit Payment</button>
+    <h2>Search for Products</h2>
+    <form method="get" action="{% url 'search_results' %}">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="q" placeholder="Search for products..." aria-label="Search for products..." aria-describedby="button-search">
+            <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
+        </div>
     </form>
+    
+    {% if results %}
+        <h3>Search Results for "{{ query }}"</h3>
+        <ul>
+            {% for product in results %}
+                <li>{{ product.name }}</li>
+            {% empty %}
+                <li>No results found</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}
+
+<form method="GET" action="{% url 'search_results' %}">
+    <input type="text" name="q" placeholder="Search...">
+    <select name="category">
+        <option value="">Select Category</option>
+        <option value="electronics">Electronics</option>
+        <option value="furniture">Furniture</option>
+        <!-- Add more options as needed -->
+    </select>
+    <input type="number" name="min_price" placeholder="Min Price">
+    <input type="number" name="max_price" placeholder="Max Price">
+    <input type="text" name="location" placeholder="Location">
+    <button type="submit">Search</button>
+</form>
+
+
+<!-- Documentation (Explanation)
+
+    In the HTML code above, we've updated the search form to include input fields and dropdown menus for filtering options such as category, price range, and location.
+    Each input field or dropdown menu is given a name attribute corresponding to the filtering criteria (e.g., "category", "min_price", "max_price", "location").
+    The form submits a GET request to the search_results view, passing the selected filtering options as query parameters.
+   -->
