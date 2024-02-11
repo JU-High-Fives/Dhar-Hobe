@@ -1,1 +1,35 @@
+{% extends "base.html" %}
+{% block title %}
+    Search Results - Bhara Hobe
+{% endblock %}
 
+{% block content %}
+    <h1>Search Results</h1>
+
+    {% if query %}
+        <p>Search Results for: <strong>{{ query }}</strong></p>
+    {% endif %}
+
+    {% if results %}
+        <ul>
+            {% for product in results %}
+                <li>
+                    <h2>{{ product.name }}</h2>
+                    <p>Category: {{ product.category }}</p>
+                    <p>Price: {{ product.price }}</p>
+                    <p>Location: {{ product.location }}</p>
+                    <!-- Add more fields as needed -->
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+{% endblock %}
+
+<!-- Explanation:
+
+    The template extends base.html to maintain a consistent layout across pages.
+    The {% block title %} tag sets the page title to "Search Results - Bhara Hobe".
+    Inside the {% block content %} tag, we first display the search query (if provided) and then iterate over the search results to display each product's details.
+    If there are no results, a message "No results found." is displayed instead. -->
