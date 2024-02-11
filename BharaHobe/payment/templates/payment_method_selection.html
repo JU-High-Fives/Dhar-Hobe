@@ -1,0 +1,8 @@
+<form action="{% url 'select_payment_method' %}" method="post">
+    {% csrf_token %}
+    <label>Select Payment Method:</label><br>
+    <input type="radio" name="payment_method" value="advance"> Advance Payment<br>
+    <input type="radio" name="payment_method" value="monthly"> Monthly Payment<br>
+    <input type="radio" name="payment_method" value="emi"> EMI Payment<br>
+    <input type="submit" value="Select">
+</form>
