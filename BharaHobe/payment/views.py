@@ -6,7 +6,7 @@ def show_orders(request):
     orders = OrderModel.objects.all()
     return render(request, 'show_orders.html', {'orders': orders})
 
-def select_payment_method_view(request, order_id):
+def select_payment_method_view(request):
     """
     View for selecting payment method.
 
@@ -16,8 +16,6 @@ def select_payment_method_view(request, order_id):
     Returns:
         HttpResponse: Rendered template for payment method selection or redirect to payment form.
     """
-    # order = get_object_or_404(OrderModel, id=order_id)
-
     if request.method == 'POST':
         selected_payment_method = request.POST.get('payment_method')
         if selected_payment_method == 'advance':
