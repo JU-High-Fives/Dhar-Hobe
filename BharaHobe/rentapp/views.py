@@ -30,3 +30,10 @@ def search_results_view(request):
         results = results.filter(location__icontains=location)
     
     return render(request, 'search_results.html', {'results': results, 'query': query})
+
+
+# In this backend logic:
+
+#     We extract the filtering criteria (e.g., query, category, min_price, max_price, location) from the request parameters using request.GET.get().
+#     We start with all products (Product.objects.all()) and apply filters based on the provided criteria using queryset filtering methods.
+#     Finally, we pass the filtered queryset (results) and the search query (query) to the template for rendering.
