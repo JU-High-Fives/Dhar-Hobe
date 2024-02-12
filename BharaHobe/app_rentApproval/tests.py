@@ -4,6 +4,7 @@ from django.urls import reverse
 from .models import Renter, Product, RenterProduct
 from .views import add_product_rqsts
 from .views import admin_page
+from .services import EmailService,ProductService
 
 class AddProductRqstsViewTestCase(TestCase):
     """
@@ -64,7 +65,7 @@ class AddProductRqstsViewTestCase(TestCase):
         
 class AdminPageViewTestCase(TestCase):
     """
-    Test case for the admin_page view.
+    Test case for the admin_page view .
     """
     def setUp(self):
         # Set up the test client
