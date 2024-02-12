@@ -1,23 +1,27 @@
 from django.shortcuts import render, redirect
 from .models import DeliveryRequest
 
+from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from .models import DeliveryRequest
+
+@login_required
 def delivery_request_create(request):
     if request.method == "POST":
-        # Process form data and create DeliveryRequest object
-        # Include validation for required fields
-        new_request = DeliveryRequest.objects.create(
-            user=request.user,
-            # Extract data from form fields
-            pickup_location=...,
-            delivery_destination=...,
-            # ... other fields
-        )
-        # Send notification to admin
-        # ...
-        return redirect("delivery_request_list")
+        form = DeliveryRequestForm(request.POST)  # Assuming you have a DeliveryRequestForm
+        if form.is_valid():
+            new_request = form.save(commit=False)  # Create DeliveryRequest instance without saving
+            new_request.user = request.user  # Assign current user to the request
+            new_request.save()  # Save the DeliveryRequest object
+            # Send notification to admin (specific implementation based on your preferences)
+            # ...
+            return redirect("delivery_request_list")
+        else:
+            # Display form with errors
+            return render(request, "delivery_request_form.html", {'form': form})
     else:
-        # Render form template
-        return render(request, "delivery_request_form.html")
+        form = DeliveryRequestForm()  # Create an empty form instance
+        return render(request, "delivery_request_form.html", {'form': form})
 
 
 def delivery_request_list(request):
