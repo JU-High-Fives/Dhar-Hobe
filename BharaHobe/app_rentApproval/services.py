@@ -9,7 +9,7 @@ class EmailService:
     """
     def send_email(self, renter_email, product_name, renter_name, subject_template, message_template):
         """
-        Sends an email notification.
+        Sends an email notification to renter.
 
         Parameters:
             renter_email (str): The email address of the renter.
