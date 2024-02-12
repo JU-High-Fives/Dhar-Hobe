@@ -23,8 +23,18 @@
             <td>{{rqst.product.description}}</td>
             <td>{{rqst.product.rental_price}}</td>
             <td>{{rqst.product.quantity_available}}</td>
-            <td><a class="btn btn-sm btn-info" href="#">Approve</a> </td>
-            <td><button type="button" class="btn btn-sm btn-danger"  >Disapprove</a> </td>
+            <!-- <td><a class="btn btn-sm btn-info" href="#">Approve</a> </td> -->
+            <!-- <td><button type="button" class="btn btn-sm btn-danger"  >Disapprove</a> </td> -->
+            <td>
+                <form action="{% url 'approve_product' rqst.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-info">Approve</button>
+                </form>
+                <form action="{% url 'disapprove_product' rqst.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">Disapprove</button>
+                </form>
+            </td>
     
            </tr>
            <!-- Delete Modal -->
