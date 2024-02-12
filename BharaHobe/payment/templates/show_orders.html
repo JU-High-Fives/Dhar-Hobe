@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Orders</h1>
+  {% for order in orders %}
+    <div>
+      <p>Order ID: {{ order.m_order_id }}</p>
+      <p>Total Amount: {{ order.m_total_amount }}</p>
+      <button href="{% url 'select_payment_method' %}">Make Payment</button>
+    </div>
+  {% endfor %}
+{% endblock %}
