@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Orders</h1>
-  {% for order in orders %}
-    <div>
-      <p>Order ID: {{ order.m_order_id }}</p>
-      <p>Total Amount: {{ order.m_total_amount }}</p>
-      <button href="{% url 'select_payment_method' %}">Make Payment</button>
-    </div>
-  {% endfor %}
+  <div class="container">
+    <h1 class="text-center mt-4 mb-4">Orders</h1>
+    {% for order in orders %}
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Order ID: {{ order.m_order_id }}</h5>
+          <p class="card-text">Total Amount: ${{ order.m_total_amount }}</p>
+          <a href="{% url 'select_payment_method' %}" class="btn btn-primary">Make Payment</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
