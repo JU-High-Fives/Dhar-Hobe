@@ -98,9 +98,12 @@ class RenterProduct(models.Model):
         The renter who wants to add the product for rent.
     product : ForeignKey to Product
         The product that the renter wants to add for rent.
+    
+
     """
     renter = models.ForeignKey(Renter,on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False)
     def __str__(self):
         """
         Returns a string representation of the renter product connection.
