@@ -3,34 +3,82 @@
 
 <head>
     <title>Delivery Requests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Delivery Requests</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>User</th>
-                <th>Pickup Location</th>
-                <th>Delivery Destination</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for request in requests %}
-            <tr>
-                <td>{{ request.user.username }}</td>
-                <td>{{ request.pickup_location }}</td>
-                <td>{{ request.delivery_destination }}</td>
-                <td>{{ request.status }}</td>
-                <td>
-                    <a href="{% url 'delivery_request_detail' request.pk %}">View Details</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <h1>Delivery Requests</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Pickup Location</th>
+                    <th>Delivery Destination</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in requests %}
+                <tr>
+                    <td>{{ request.user.username }}</td>
+                    <td>{{ request.pickup_location }}</td>
+                    <td>{{ request.delivery_destination }}</td>
+                    <td>{{ request.status }}</td>
+                    <td>
+                        <a href="{% url 'delivery_request_detail' request.pk %}">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

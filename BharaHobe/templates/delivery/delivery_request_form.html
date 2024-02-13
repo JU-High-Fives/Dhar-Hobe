@@ -3,29 +3,77 @@
 
 <head>
     <title>New Delivery Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input[type="text"],
+        form textarea {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>New Delivery Request</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="pickup_location">Pickup Location:</label>
-        <input type="text" id="pickup_location" name="pickup_location" required>
-        <br>
-        <label for="delivery_destination">Delivery Destination:</label>
-        <input type="text" id="delivery_destination" name="delivery_destination" required>
-        <br>
-        <label for="size_weight">Size/Weight:</label>
-        <input type="text" id="size_weight" name="size_weight" required>
-        <br>
-        <label for="preferred_delivery_window">Preferred Delivery Window (optional):</label>
-        <input type="text" id="preferred_delivery_window" name="preferred_delivery_window">
-        <br>
-        <label for="special_instructions">Special Instructions (optional):</label>
-        <textarea id="special_instructions" name="special_instructions"></textarea>
-        <br>
-        <button type="submit">Submit Request</button>
-    </form>
+    <div class="container">
+        <h1>New Delivery Request</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="pickup_location">Pickup Location:</label>
+            <input type="text" id="pickup_location" name="pickup_location" required>
+            <br>
+            <label for="delivery_destination">Delivery Destination:</label>
+            <input type="text" id="delivery_destination" name="delivery_destination" required>
+            <br>
+            <label for="size_weight">Size/Weight:</label>
+            <input type="text" id="size_weight" name="size_weight" required>
+            <br>
+            <label for="preferred_delivery_window">Preferred Delivery Window (optional):</label>
+            <input type="text" id="preferred_delivery_window" name="preferred_delivery_window">
+            <br>
+            <label for="special_instructions">Special Instructions (optional):</label>
+            <textarea id="special_instructions" name="special_instructions"></textarea>
+            <br>
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>
 </body>
 
 </html>
