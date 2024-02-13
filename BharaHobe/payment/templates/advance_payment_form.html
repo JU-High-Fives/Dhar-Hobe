@@ -2,7 +2,17 @@
 
 {% block content %}
     <h2>Make a Payment</h2>
-    <form method="post" action="">
+    <form method="post" action="{% url 'advance_payment_form' order_id=order.m_order_id %}">
+        <div>
+            You are paying order number: {{ order.m_order_id }}
+        </div>
+        <div>
+            Order Details:
+            <ul>
+                <li>Total Items: {{ order.m_items }}</li>
+                <li>Total Amount: ${{ order.m_total_amount }}</li>
+            </ul>
+        </div>
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Submit Payment</button>

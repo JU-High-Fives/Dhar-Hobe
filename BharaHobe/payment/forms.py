@@ -1,8 +1,6 @@
 from django import forms
 
 class advancePaymentForm(forms.Form):
-    f_order_id = forms.CharField(label='Order ID', required=True, max_length=50)
-    f_amount = forms.DecimalField(label='Advance amount', min_value=0.01, required=True)
     f_payment_method = forms.ChoiceField(
         label='Payment Method',
         choices=[('credit_card', 'Credit Card'), ('paypal', 'PayPal')],
@@ -22,7 +20,6 @@ class advancePaymentForm(forms.Form):
     def clean_f_credit_card_number(self):
         credit_card_number = self.cleaned_data['f_credit_card_number']
         if credit_card_number == "123":
-            self.cleaned_data['f_isSuccess'] = True
             return credit_card_number
         else:
             raise forms.ValidationError('Invalid Credit Card/PayPal Number')
