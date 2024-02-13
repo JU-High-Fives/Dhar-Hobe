@@ -1,3 +1,47 @@
+/* Applying CSS styles to elements in the search interface */
+.search-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-form input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.search-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-results {
+    margin-top: 20px;
+}
+
+.search-results ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.search-results li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+
+
 {% extends "base.html" %}
 {% block title %}
     Search Results - Bhara Hobe
@@ -33,3 +77,15 @@
     The {% block title %} tag sets the page title to "Search Results - Bhara Hobe".
     Inside the {% block content %} tag, we first display the search query (if provided) and then iterate over the search results to display each product's details.
     If there are no results, a message "No results found." is displayed instead. -->
+
+    <!-- Updating the HTML structure and content for displaying search results -->
+<div class="search-results">
+    <h2>Search Results</h2>
+    <ul>
+        {% for result in results %}
+            <li>{{ result.name }} - {{ result.category }}</li>
+        {% empty %}
+            <li>No results found.</li>
+        {% endfor %}
+    </ul>
+</div>
