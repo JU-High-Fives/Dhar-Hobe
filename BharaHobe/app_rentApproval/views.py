@@ -26,6 +26,8 @@ def approve_product(request, request_id):
     """
     renter_product = RenterProduct.objects.get(id=request_id)
     ProductService().approve_product(renter_product)
+    renter_product.is_approved = True  # Set the is_approved field to True
+    renter_product.save()  # Save the changes
     return HttpResponseRedirect(reverse('add_product_rqsts'))
 
 def disapprove_product(request, request_id):
@@ -41,6 +43,8 @@ def disapprove_product(request, request_id):
     """
     renter_product = RenterProduct.objects.get(id=request_id)
     ProductService().disapprove_product(renter_product)
+    renter_product.is_approved = False  # Set the is_approved field to False
+    renter_product.save()  # Save the changes
     return HttpResponseRedirect(reverse('add_product_rqsts'))
 
 def add_product_rqsts(request):
