@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 # Create your models here.
 class Product(models.Model):
     """
@@ -104,6 +104,7 @@ class RenterProduct(models.Model):
     renter = models.ForeignKey(Renter,on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
+    approved_at = models.DateTimeField(null=True, blank=True)
     def __str__(self):
         """
         Returns a string representation of the renter product connection.
@@ -115,3 +116,18 @@ class RenterProduct(models.Model):
         """
                 
         return "%s %s" % (self.renter, self.product)
+    def approve(self):
+        """
+        Approves the product request and sets the approved_at field to the current datetime.
+        """
+        self.is_approved = True
+        self.approved_at = timezone.now()
+        self.save()
+
+    def disapprove(self):
+        """
+        Disapproves the product request.
+        """
+        self.is_approved = False
+        self.approved_at = None
+        self.save()
