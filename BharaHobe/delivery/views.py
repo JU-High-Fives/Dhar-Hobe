@@ -26,7 +26,7 @@ def delivery_request_create(request):
     else:
         # Render an empty delivery request form
         form = DeliveryRequestForm()
-    return render(request, "delivery_request_form.html", {'form': form})
+    return render(request, "delivery/delivery_request_form.html", {'form': form})
 
 def delivery_request_list(request):
     """
@@ -35,7 +35,7 @@ def delivery_request_list(request):
     # Retrieve all delivery requests from the database
     requests = DeliveryRequest.objects.all()
     context = {"requests": requests}
-    return render(request, "delivery_request_list.html", context)
+    return render(request, "delivery/delivery_request_list.html", context)
 
 def delivery_request_detail(request, pk):
     """
@@ -44,7 +44,7 @@ def delivery_request_detail(request, pk):
     # Retrieve the specific delivery request object or return a 404 error if not found
     request_obj = get_object_or_404(DeliveryRequest, pk=pk)
     context = {"request": request_obj}
-    return render(request, "delivery_request_detail.html", context)
+    return render(request, "delivery/delivery_request_detail.html", context)
 
 @login_required
 def delivery_request_update(request, pk):
@@ -61,4 +61,4 @@ def delivery_request_update(request, pk):
     else:
         # Render update form with current data
         context = {"request": request_obj}
-        return render(request, "delivery_request_update.html", context)
+        return render(request, "delivery/delivery_request_update.html", context)

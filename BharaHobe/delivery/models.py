@@ -31,10 +31,21 @@ class DeliveryRequest(models.Model):
         ("In transit", "In transit"),
         ("Delivered", "Delivered")
     ]
-
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, help_text="Status of the delivery request")
     # CharField representing the status of the delivery request with predefined choices.
-
+    
     created_at = models.DateTimeField(auto_now_add=True, help_text="Date and time when the delivery request was created")
     # DateTimeField representing the date and time when the delivery request was created.
-    updated_at = models.DateTimeField(auto_now=True, help_text="Date
+    updated_at = models.DateTimeField(auto_now=True, help_text="Date and time when the delivery request was last updated")
+    # DateTimeField representing the date and time when the delivery request was last updated.
+
+class DeliveryProvider(models.Model):
+    """
+    Model representing a delivery provider.
+    """
+
+    # Fields
+    name = models.CharField(max_length=255, help_text="Name of the delivery provider")
+    # CharField representing the name of the delivery provider.
+    contact_details = models.CharField(max_length=255, help_text="Contact details of the delivery provider")
+    # CharField representing the contact details of the delivery provider.
