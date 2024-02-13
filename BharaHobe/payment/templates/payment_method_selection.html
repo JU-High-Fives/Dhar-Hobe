@@ -1,4 +1,4 @@
-<form action="{% url 'select_payment_method' %}" method="post">
+<form action="{% url 'select_payment_method' order_id=order.m_order_id %}" method="post">
     {% csrf_token %}
     <label>Select Payment Method:</label><br>
     <input type="radio" name="payment_method" value="advance"> Advance Payment<br>

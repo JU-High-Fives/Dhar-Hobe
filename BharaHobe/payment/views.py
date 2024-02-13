@@ -6,26 +6,31 @@ def show_orders(request):
     orders = OrderModel.objects.all()
     return render(request, 'show_orders.html', {'orders': orders})
 
-def select_payment_method_view(request):
+def select_payment_method_view(request, order_id):
     """
     View for selecting payment method.
 
     If POST request, redirects to the chosen payment form,
     else renders the payment method selection page.
 
+    Args:
+        order_id (int): The ID of the selected order.
+
     Returns:
         HttpResponse: Rendered template for payment method selection or redirect to payment form.
     """
+    order = OrderModel.objects.get(pk=order_id)
+
     if request.method == 'POST':
         selected_payment_method = request.POST.get('payment_method')
         if selected_payment_method == 'advance':
-            return redirect('advance_payment_form')
+            return redirect('advance_payment_form', order_id=order_id)
         elif selected_payment_method == 'monthly':
-            return redirect('monthly_payment_form')
+            return redirect('monthly_payment_form', order_id=order_id)
         elif selected_payment_method == 'emi':
-            return redirect('emi_payment_form')
+            return redirect('emi_payment_form', order_id=order_id)
 
-    return render(request, 'payment_method_selection.html')
+    return render(request, 'payment_method_selection.html', {'order': order})
 
 def advance_payment_view(request):
     """

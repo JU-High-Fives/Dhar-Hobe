@@ -8,7 +8,7 @@
         <div class="card-body">
           <h5 class="card-title">Order ID: {{ order.m_order_id }}</h5>
           <p class="card-text">Total Amount: ${{ order.m_total_amount }}</p>
-          <a href="{% url 'select_payment_method' %}" class="btn btn-primary">Make Payment</a>
+          <a href="{% url 'select_payment_method' order_id=order.m_order_id %}" class="btn btn-primary">Make Payment</a>
         </div>
       </div>
     {% endfor %}
