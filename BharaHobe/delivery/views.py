@@ -16,44 +16,46 @@ def delivery_request_create(request):
     if request.method == "POST":
         form = DeliveryRequestForm(request.POST)
         if form.is_valid():
+            # Create a new delivery request object and save it
             new_request = form.save(commit=False)
             new_request.user = request.user
             new_request.save()
             # Send notification to admin
-            # ...
+            # ... (not implemented)
             return redirect("delivery_request_list")
     else:
+        # Render an empty delivery request form
         form = DeliveryRequestForm()
     return render(request, "delivery_request_form.html", {'form': form})
-
 
 def delivery_request_list(request):
     """
     List all delivery requests.
     """
+    # Retrieve all delivery requests from the database
     requests = DeliveryRequest.objects.all()
     context = {"requests": requests}
     return render(request, "delivery_request_list.html", context)
-
 
 def delivery_request_detail(request, pk):
     """
     View details of a specific delivery request.
     """
+    # Retrieve the specific delivery request object or return a 404 error if not found
     request_obj = get_object_or_404(DeliveryRequest, pk=pk)
     context = {"request": request_obj}
     return render(request, "delivery_request_detail.html", context)
-
 
 @login_required
 def delivery_request_update(request, pk):
     """
     Update a delivery request.
     """
+    # Retrieve the specific delivery request object or return a 404 error if not found
     request_obj = get_object_or_404(DeliveryRequest, pk=pk)
     if request.method == "POST":
         # Process form submission and update request object
-        # ...
+        # ... (not implemented)
         request_obj.save()
         return redirect("delivery_request_list")
     else:
