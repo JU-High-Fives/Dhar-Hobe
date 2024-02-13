@@ -42,3 +42,9 @@
     Each input field or dropdown menu is given a name attribute corresponding to the filtering criteria (e.g., "category", "min_price", "max_price", "location").
     The form submits a GET request to the search_results view, passing the selected filtering options as query parameters.
    -->
+
+   <!-- Updating the HTML structure and content for the search form -->
+<form class="search-form" action="{% url 'search_results' %}" method="get">
+    <input type="text" name="q" placeholder="Search...">
+    <button type="submit">Search</button>
+</form>
