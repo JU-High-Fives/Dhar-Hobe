@@ -2,7 +2,7 @@ from django.urls import path
 from .views import advance_payment_view, payment_success, select_payment_method_view, monthly_payment_view, emi_payment_view, show_orders
 
 urlpatterns = [
-    path('show-orders/', show_orders, name='show_orders'),
+    path('show_orders/', show_orders, name='show_orders'),
     path('select_payment_method/<int:order_id>/', select_payment_method_view, name='select_payment_method'),
     path('advance_payment_form/<int:order_id>/', advance_payment_view, name='advance_payment_form'),
     path('monthly_payment_form/', monthly_payment_view, name='monthly_payment_form'),
