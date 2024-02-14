@@ -27,7 +27,7 @@ def approve_product(request, request_id):
         HttpResponseRedirect: Redirects to the add product requests page.
     """
     renter_product = RenterProduct.objects.get(id=request_id)
-    renter_product.is_approved = True  # Set the is_approved field to 
+    renter_product.is_approved = 'approved'  # Set the is_approved field to 
     renter_product.approved_at=timezone.now()
     renter_product.save()  # Save the changes
     ProductService().approve_product(renter_product)
@@ -45,7 +45,7 @@ def disapprove_product(request, request_id):
         HttpResponseRedirect: Redirects to the add product requests page.
     """
     renter_product = RenterProduct.objects.get(id=request_id)
-    renter_product.is_approved = False  # Set the is_approved field to False
+    renter_product.is_approved = 'disapproved'  # Set the is_approved field to False
     renter_product.approved_at=timezone.now()
     renter_product.save()  # Save the changes
     ProductService().disapprove_product(renter_product)
@@ -63,7 +63,7 @@ def add_product_rqsts(request):
         request (HttpRequest): The HTTP request object.
         
     Returns:
-        HttpResponse: Renders the add product requests page with a list of product requests.
+        HttpResponse: Renders the add product requests page with a list of product requests with is_approved status pending.
     """
     if request.method == 'POST':
         request_id = request.POST.get('request_id')
@@ -72,10 +72,11 @@ def add_product_rqsts(request):
         renter_product = RenterProduct.objects.get(id=request_id)
         ProductService().handle_action(action, renter_product)
 
-    requests = RenterProduct.objects.all()
+    requests = RenterProduct.objects.filter(is_approved='pending')
+    
     if not requests:
         # If there are no products available, render a message
-        return HttpResponse('No products available for rent.')
+        return HttpResponse('No products requests available for rent.')
     context = {'requests': requests}
     return render(request, 'app_rentApproval/add_product_rqsts.html', context)
 
@@ -89,7 +90,7 @@ def approved_requests(request):
     Returns:
         HttpResponse: Renders the approved requests page with a list of approved product requests.
     """
-    approved_requests = RenterProduct.objects.filter(is_approved=True)
+    approved_requests = RenterProduct.objects.filter(is_approved='approved')
     context = {'approved_requests': approved_requests}
     return render(request, 'app_rentApproval/approved_requests.html', context)
 
@@ -103,6 +104,6 @@ def disapproved_requests(request):
     Returns:
         HttpResponse: Renders the disapproved requests page with a list of disapproved product requests.
     """
-    disapproved_requests = RenterProduct.objects.filter(is_approved=False)
+    disapproved_requests = RenterProduct.objects.filter(is_approved='disapproved')
     context = {'disapproved_requests': disapproved_requests}
     return render(request, 'app_rentApproval/disapproved_requests.html', context)

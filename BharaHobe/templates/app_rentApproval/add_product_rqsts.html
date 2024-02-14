@@ -2,46 +2,45 @@
 {% load static %}
 
 {% block content %}
-<div>
-    <table class="tbl">
-        <tr id="header">
-            <th>Renter Name</th>
-            <th>Renter Email</th>
-            <th>Product Name</th>
-            <th>Product Description</th>
-            <th>Rental Price</th>
-            <th>Quantity</th>
-            <th>Approve</th>
-            <th>Disapprove</th>
-        </tr>
-    
-            {% for rqst in requests%}
-           <tr>
-            <td>{{rqst.renter.username}}</td>
-            <td>{{rqst.renter.email}}</td>
-            <td>{{rqst.product.name}}</td>
-            <td>{{rqst.product.description}}</td>
-            <td>{{rqst.product.rental_price}}</td>
-            <td>{{rqst.product.quantity_available}}</td>
-            <!-- <td><a class="btn btn-sm btn-info" href="#">Approve</a> </td> -->
-            <!-- <td><button type="button" class="btn btn-sm btn-danger"  >Disapprove</a> </td> -->
-            <td>
-                <form action="{% url 'approve_product' rqst.id %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-info">Approve</button>
-                </form>
-                <form action="{% url 'disapprove_product' rqst.id %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-danger">Disapprove</button>
-                </form>
-            </td>
-    
-           </tr>
-           <!-- Delete Modal -->
-    
-        {% endfor %}
-    
+<h1 style="text-align: center;">Pending Requests</h1>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Renter Name</th>
+                <th>Renter Email</th>
+                <th>Product Name</th>
+                <th>Product Description</th>
+                <th>Rental Price</th>
+                <th>Quantity</th>
+                <th>Approve</th>
+                <th>Disapprove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rqst in requests %}
+            <tr>
+                <td>{{ rqst.renter.username }}</td>
+                <td>{{ rqst.renter.email }}</td>
+                <td>{{ rqst.product.name }}</td>
+                <td>{{ rqst.product.description }}</td>
+                <td>{{ rqst.product.rental_price }}</td>
+                <td>{{ rqst.product.quantity_available }}</td>
+                <td>
+                    <form action="{% url 'approve_product' rqst.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'disapprove_product' rqst.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">Disapprove</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-          
-    </div>
+</div>
 {% endblock %}

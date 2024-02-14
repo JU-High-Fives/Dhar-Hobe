@@ -101,9 +101,16 @@ class RenterProduct(models.Model):
     
 
     """
+     # Other fields...
+    IS_APPROVED_CHOICES = (
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('disapproved', 'Disapproved'),
+    )
+    is_approved = models.CharField(max_length=20, choices=IS_APPROVED_CHOICES, default='pending')
+    
     renter = models.ForeignKey(Renter,on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    is_approved = models.BooleanField(default=False)
     approved_at = models.DateTimeField(null=True, blank=True)
     def __str__(self):
         """
