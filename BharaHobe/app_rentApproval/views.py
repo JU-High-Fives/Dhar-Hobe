@@ -5,6 +5,8 @@ from .models import *
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from .services import EmailService, ProductService
+from django.utils import timezone
+
 # Create your views here.
 def admin_page(request):
     """This function renders to the admin page from userprofile page
@@ -25,9 +27,10 @@ def approve_product(request, request_id):
         HttpResponseRedirect: Redirects to the add product requests page.
     """
     renter_product = RenterProduct.objects.get(id=request_id)
-    ProductService().approve_product(renter_product)
-    renter_product.is_approved = True  # Set the is_approved field to True
+    renter_product.is_approved = True  # Set the is_approved field to 
+    renter_product.approved_at=timezone.now()
     renter_product.save()  # Save the changes
+    ProductService().approve_product(renter_product)
     return HttpResponseRedirect(reverse('add_product_rqsts'))
 
 def disapprove_product(request, request_id):
@@ -42,9 +45,11 @@ def disapprove_product(request, request_id):
         HttpResponseRedirect: Redirects to the add product requests page.
     """
     renter_product = RenterProduct.objects.get(id=request_id)
-    ProductService().disapprove_product(renter_product)
     renter_product.is_approved = False  # Set the is_approved field to False
+    renter_product.approved_at=timezone.now()
     renter_product.save()  # Save the changes
+    ProductService().disapprove_product(renter_product)
+    
     return HttpResponseRedirect(reverse('add_product_rqsts'))
 
 def add_product_rqsts(request):

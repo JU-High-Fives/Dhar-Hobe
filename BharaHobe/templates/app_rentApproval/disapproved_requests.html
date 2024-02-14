@@ -1,5 +1,28 @@
-<html>
-    <body>
-        hello approved
-    </body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+    <h1>Disapproved Requests</h1>
+</div>
+<div>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Renter</th>
+                <th>Product</th>
+                <th>Disapproval Date & Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in disapproved_requests %}
+                <tr>
+                    <td>{{ request.renter.username }}</td>
+                    <td>{{ request.product.name }}</td>
+                    <td>{{ request.approved_at }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -116,18 +116,18 @@ class RenterProduct(models.Model):
         """
                 
         return "%s %s" % (self.renter, self.product)
-    def approve(self):
-        """
-        Approves the product request and sets the approved_at field to the current datetime.
-        """
-        self.is_approved = True
-        self.approved_at = timezone.now()
-        self.save()
+    # def approve(self):
+    #     """
+    #     Approves the product request and sets the approved_at field to the current datetime.
+    #     """
+    #     self.is_approved = True
+    #     self.approved_at = timezone.now()
+    #     self.save()
 
-    def disapprove(self):
-        """
-        Disapproves the product request.
-        """
-        self.is_approved = False
-        self.approved_at = None
-        self.save()
+    # def disapprove(self):
+    #     """
+    #     Disapproves the product request.
+    #     """
+    #     self.is_approved = False
+    #     self.approved_at = None
+    #     self.save()

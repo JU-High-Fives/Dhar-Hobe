@@ -64,7 +64,8 @@ class ProductService:
         # Update the status or perform any other necessary actions
         EmailService().send_email(
             renter_product.renter.email,
-            renter_product.product.username,
+            renter_product.product.name,
+            renter_product.renter.username,
             'Product Disapproval Notification',
             'Dear {renter_name},\n\nYour request to add {product_name} for rent has been disapproved:(.\n\nThank you,\nAdmin,\nDhar Hobe'
         )

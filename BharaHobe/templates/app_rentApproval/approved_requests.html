@@ -3,47 +3,26 @@
 
 {% block content %}
 <div>
-    <h1>Approved Requestes</h1>
+    <h1 style="text-align: center; color: #093a00; font-family: 'Arial', sans-serif; font-size: 24px; margin-bottom: 20px;">Approved Requests</h1>
 </div>
 <div>
-    <table class="tbl">
-        <tr id="header">
-            <th>Renter Name</th>
-            <th>Renter Email</th>
-            <th>Product Name</th>
-            <th>Product Description</th>
-            <th>Rental Price</th>
-            <th>Quantity</th>
-            
-        </tr>
-    
-            {% for rqst in requests%}
-           <tr>
-            <td>{{rqst.renter.username}}</td>
-            <td>{{rqst.renter.email}}</td>
-            <td>{{rqst.product.name}}</td>
-            <td>{{rqst.product.description}}</td>
-            <td>{{rqst.product.rental_price}}</td>
-            <td>{{rqst.product.quantity_available}}</td>
-            <!-- <td><a class="btn btn-sm btn-info" href="#">Approve</a> </td> -->
-            <!-- <td><button type="button" class="btn btn-sm btn-danger"  >Disapprove</a> </td> -->
-            <td>
-                <form action="{% url 'approve_product' rqst.id %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-info">Approve</button>
-                </form>
-                <form action="{% url 'disapprove_product' rqst.id %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-danger">Disapprove</button>
-                </form>
-            </td>
-    
-           </tr>
-           <!-- Delete Modal -->
-    
-        {% endfor %}
-    
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Renter</th>
+                <th>Product</th>
+                <th>Approval Date & Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in approved_requests %}
+                <tr>
+                    <td>{{ request.renter.username }}</td>
+                    <td>{{ request.product.name }}</td>
+                    <td>{{ request.approved_at }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
-          
-    </div>
+</div>
 {% endblock %}
