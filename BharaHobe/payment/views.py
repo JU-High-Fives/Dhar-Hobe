@@ -4,6 +4,16 @@ from .models import PaymentModel, OrderModel
 from .mock_payment import MockPaymentError, MockPaymentGateway
 
 def show_orders(request):
+    """
+    Shows all the orders in card with a payment button
+
+    Args:
+        request (HttpRequest): The HTTP request object
+    
+    Returns:
+        HttpResponse: Rendered template for order list showing
+
+    """
     orders = OrderModel.objects.all()
     return render(request, 'show_orders.html', {'orders': orders})
 
@@ -34,6 +44,20 @@ def select_payment_method_view(request, order_id):
     return render(request, 'payment_method_selection.html', {'order': order})
 
 def advance_payment_view(request, order_id):
+    """
+    View for handling advance payment form.
+
+    If POST request, processes form data, creates PaymentModel, and renders payment success page.
+    If GET request, renders the advance payment form.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        order_id (int): The ID of the order for which the payment is being processed.
+
+    Returns:
+        HttpResponse: Rendered template for advance payment form or payment success.
+    """
+
     order = OrderModel.objects.get(pk=order_id)
 
     if request.method == 'POST':
