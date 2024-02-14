@@ -1,4 +1,7 @@
 from django import forms
+from .mock_payment import MockPaymentGateway, MockPaymentError
+
+from django import forms
 
 class advancePaymentForm(forms.Form):
     f_payment_method = forms.ChoiceField(
@@ -16,17 +19,23 @@ class advancePaymentForm(forms.Form):
         widget=forms.Textarea(attrs={'rows': 4}),
         required=False
     )
+    f_amount = forms.DecimalField(label='Advance amount', min_value=0.01, required=True)
+    f_card_token = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def clean_f_credit_card_number(self):
         credit_card_number = self.cleaned_data['f_credit_card_number']
-        if credit_card_number == "123":
-            return credit_card_number
-        else:
-            raise forms.ValidationError('Invalid Credit Card/PayPal Number')
+        return credit_card_number
 
-    def clean_f_amount(self):
-        amount = self.cleaned_data['f_amount']
-        return amount
+    def clean(self):
+        cleaned_data = super().clean()
+        payment_method = cleaned_data.get('f_payment_method')
+
+        if payment_method == 'credit_card':
+            # You can implement your own logic here for credit card validation
+            # For now, let's assume any credit card number is valid
+            cleaned_data['f_card_token'] = 'mock_card_token'
+
+        return cleaned_data
 
 
 class monthlyPaymentForm(forms.Form):

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import advancePaymentForm, monthlyPaymentForm, emiPaymentForm
 from .models import PaymentModel, OrderModel
+from .mock_payment import MockPaymentError, MockPaymentGateway
 
 def show_orders(request):
     orders = OrderModel.objects.all()
@@ -33,32 +34,28 @@ def select_payment_method_view(request, order_id):
     return render(request, 'payment_method_selection.html', {'order': order})
 
 def advance_payment_view(request, order_id):
-    """
-    View for handling advance payment form.
-
-    If POST request, processes form data, creates PaymentModel, and renders payment success page.
-    If GET request, renders the advance payment form.
-
-    Returns:
-        HttpResponse: Rendered template for advance payment form or payment success.
-    """
     order = OrderModel.objects.get(pk=order_id)
+
     if request.method == 'POST':
         form = advancePaymentForm(request.POST)
+
         if form.is_valid():
-            f_amount = form.cleaned_data['f_amount']
-            f_isSuccess = form.cleaned_data['f_isSuccess']
-            payment = PaymentModel.objects.create(
-                m_order=order,
-                m_amount=f_amount,
-                m_isSuccess=f_isSuccess
-            )
-            return render(request, 'payment_success.html', {'payment': payment})
+            payment_method = form.cleaned_data['f_payment_method']
+
+            if payment_method == 'credit_card':
+                payment = PaymentModel.objects.create(
+                    m_order_id=order.m_order_id,
+                    m_amount=form.cleaned_data['f_amount'],
+                    m_isSuccess=True,
+                    m_payment_method='credit_card',
+                    m_notes=form.cleaned_data['f_notes'],
+                )
+                return render(request, 'payment_success.html', {'payment': payment})
+
     else:
         form = advancePaymentForm()
 
     return render(request, 'advance_payment_form.html', {'form': form, 'order': order})
-
 
 def monthly_payment_view(request):
     """
