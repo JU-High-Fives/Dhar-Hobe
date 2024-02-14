@@ -71,6 +71,20 @@
     {% endif %}
 {% endblock %}
 
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Search Results</h2>
+    <p>Showing results for: "{{ query }}"</p>
+    <ul>
+    {% for product in results %}
+        <li>{{ product.name }} - {{ product.description }}</li>
+    {% empty %}
+        <li>No results found.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+
+
 <!-- Explanation:
 
     The template extends base.html to maintain a consistent layout across pages.
@@ -89,3 +103,6 @@
         {% endfor %}
     </ul>
 </div>
+
+
+<!-- The search results are rendered in the search_results.html template, displaying the name and description of each matching product. -->
