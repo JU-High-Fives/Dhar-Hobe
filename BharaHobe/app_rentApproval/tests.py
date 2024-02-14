@@ -61,7 +61,7 @@ class AddProductRqstsViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Assert that the response contains a message indicating no products are available
-        self.assertContains(response, 'No products available for rent.')
+        self.assertContains(response, 'No add products requests for rent is available')
         
 class AdminPageViewTestCase(TestCase):
     """

@@ -76,7 +76,7 @@ def add_product_rqsts(request):
     
     if not requests:
         # If there are no products available, render a message
-        return HttpResponse('No products requests available for rent.')
+        return HttpResponse('No add products requests for rent is available')
     context = {'requests': requests}
     return render(request, 'app_rentApproval/add_product_rqsts.html', context)
 
