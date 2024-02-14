@@ -31,8 +31,6 @@ class advancePaymentForm(forms.Form):
         payment_method = cleaned_data.get('f_payment_method')
 
         if payment_method == 'credit_card':
-            # You can implement your own logic here for credit card validation
-            # For now, let's assume any credit card number is valid
             cleaned_data['f_card_token'] = 'mock_card_token'
 
         return cleaned_data

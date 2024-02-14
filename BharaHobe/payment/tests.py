@@ -3,6 +3,9 @@ from django.urls import reverse
 from .models import OrderModel
 
 class ShowOrdersViewTests(TestCase):
+    """
+    This function creates an order
+    """
     def setUp(self):
         self.order = OrderModel.objects.create(
             m_order_id='123456',
@@ -11,9 +14,15 @@ class ShowOrdersViewTests(TestCase):
             m_notes='Some notes for the order'
         )
 
+    """
+    This functions checks whether order id is correct or not
+    """
     def test_order_str_representation(self):
         self.assertEqual(str(self.order), "Order #123456")
 
+    """
+    This function ensures an order is unique
+    """
     def test_order_unique_constraint(self):
         duplicate_order = OrderModel(
             m_order_id='123456', 
@@ -23,6 +32,9 @@ class ShowOrdersViewTests(TestCase):
         with self.assertRaises(Exception):
             duplicate_order.save()
 
+    """
+    This function checks that the note field can be empty for order creation
+    """
     def test_order_notes_blank_or_null(self):
         order_with_blank_notes = OrderModel(
             m_order_id='789012',
