@@ -22,3 +22,22 @@ class ShowOrdersViewTests(TestCase):
         )
         with self.assertRaises(Exception):
             duplicate_order.save()
+
+    def test_order_notes_blank_or_null(self):
+        order_with_blank_notes = OrderModel(
+            m_order_id='789012',
+            m_items='Item4, Item5',
+            m_total_amount=75.25,
+            m_notes='',
+        )
+        order_with_null_notes = OrderModel(
+            m_order_id='345678',
+            m_items='Item6, Item7',
+            m_total_amount=120.00,
+            m_notes=None,
+        )
+        order_with_blank_notes.save()
+        order_with_null_notes.save()
+
+        self.assertEqual(order_with_blank_notes.m_notes, '')
+        self.assertIsNone(order_with_null_notes.m_notes)
