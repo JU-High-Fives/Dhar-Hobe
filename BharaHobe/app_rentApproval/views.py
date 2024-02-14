@@ -107,3 +107,4 @@ def disapproved_requests(request):
     disapproved_requests = RenterProduct.objects.filter(is_approved='disapproved')
     context = {'disapproved_requests': disapproved_requests}
     return render(request, 'app_rentApproval/disapproved_requests.html', context)
+
