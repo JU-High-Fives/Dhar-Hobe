@@ -17,5 +17,6 @@ urlpatterns = [
     path('update/<int:pk>/', views.delivery_request_update, name='delivery_request_update'),
 
     # Endpoint to track delivery progress (optional)
-    # path('track/<int:pk>/', views.DeliveryRequestTrackView.as_view(), name='delivery_request_track'),
+    path('track/<int:pk>/', views.delivery_request_track, name='delivery_request_track'),
+    path('complete/<int:pk>/', views.delivery_complete, name='delivery_complete'),
 ]

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Delivery Request</title>
+</head>
+
+<body>
+    <h1>New Delivery Request</h1>
+    <p>A new delivery request has been submitted.</p>
+    <p>Details:</p>
+    <ul>
+        <li>User: {{ request.user.username }}</li>
+        <li>Pickup Location: {{ request.pickup_location }}</li>
+        <li>Delivery Destination: {{ request.delivery_destination }}</li>
+        <!-- Add more details as needed -->
+    </ul>
+</body>
+
+</html>

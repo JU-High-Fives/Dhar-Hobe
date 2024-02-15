@@ -32,6 +32,23 @@
         .details strong {
             font-weight: bold;
         }
+
+        .actions {
+            margin-top: 20px;
+        }
+
+        .actions a {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .actions a:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 
@@ -46,6 +63,16 @@
             <p><strong>Preferred Delivery Window:</strong> {{ request.preferred_delivery_window }}</p>
             <p><strong>Special Instructions:</strong> {{ request.special_instructions }}</p>
             <p><strong>Status:</strong> {{ request.status }}</p>
+        </div>
+
+        <div class="actions">
+            {% if request.status == 'pending' %}
+            <a href="{% url 'delivery:delivery_request_track' pk=request.pk %}">Track Delivery Progress</a>
+            {% endif %}
+            {% if request.status == 'in_progress' %}
+            <a href="{% url 'delivery:delivery_request_track' pk=request.pk %}">Track Delivery Progress</a>
+            <a href="{% url 'delivery:delivery_complete' pk=request.pk %}">Complete Delivery</a>
+            {% endif %}
         </div>
     </div>
 </body>

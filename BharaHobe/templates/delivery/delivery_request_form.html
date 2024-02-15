@@ -48,12 +48,40 @@
         form button:hover {
             background-color: #0056b3;
         }
+
+        .messages {
+            margin-top: 20px;
+        }
+
+        .alert {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <h1>New Delivery Request</h1>
+
+        <!-- Display Confirmation Message -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
             <label for="pickup_location">Pickup Location:</label>

@@ -72,7 +72,12 @@
                     <td>{{ request.delivery_destination }}</td>
                     <td>{{ request.status }}</td>
                     <td>
-                        <a href="{% url 'delivery_request_detail' request.pk %}">View Details</a>
+                        {% if request.status == 'pending' %}
+                        <a href="{% url 'delivery:delivery_request_track' pk=request.pk %}">Track Progress</a>
+                        {% elif request.status == 'in_progress' %}
+                        <a href="{% url 'delivery:delivery_request_track' pk=request.pk %}">Track Progress</a>
+                        <a href="{% url 'delivery:delivery_complete' pk=request.pk %}">Complete Delivery</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

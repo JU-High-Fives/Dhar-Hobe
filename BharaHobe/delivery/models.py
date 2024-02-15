@@ -31,7 +31,7 @@ class DeliveryRequest(models.Model):
         ("In transit", "In transit"),
         ("Delivered", "Delivered")
     ]
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES, help_text="Status of the delivery request")
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, help_text="Status of the delivery request", default='pending')
     # CharField representing the status of the delivery request with predefined choices.
     
     created_at = models.DateTimeField(auto_now_add=True, help_text="Date and time when the delivery request was created")

@@ -3,7 +3,6 @@ from django.urls import reverse
 from .models import DeliveryRequest
 from django.contrib.auth.models import User
 
-
 class DeliveryRequestViewTest(TestCase):
     def setUp(self):
         # Create a user for testing
@@ -73,5 +72,3 @@ class DeliveryRequestViewTest(TestCase):
 
         # Check if the delivery request details are present in the response
         self.assertEqual(response.context['request'], self.delivery_request)
-
-    def
