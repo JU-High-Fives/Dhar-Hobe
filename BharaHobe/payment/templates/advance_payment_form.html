@@ -15,7 +15,6 @@
         </div>
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="hidden" name="f_card_token" value="{{ form.f_card_token.value }}">
         <button type="submit">Submit Payment</button>
     </form>
 {% endblock %}

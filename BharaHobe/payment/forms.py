@@ -21,6 +21,7 @@ class advancePaymentForm(forms.Form):
     f_amount = forms.DecimalField(label='Advance amount', min_value=0.01, required=True)
     f_card_token = forms.CharField(widget=forms.HiddenInput(), required=False)
 
+    @staticmethod
     def is_valid_credit_card(credit_card):
         total = 0
         num_digits = len(credit_card)
@@ -38,7 +39,6 @@ class advancePaymentForm(forms.Form):
 
         return total % 10 == 0
 
-
     def clean_f_credit_card_number(self):
         credit_card = self.cleaned_data.get('f_credit_card_number')
         if not self.is_valid_credit_card(credit_card):
@@ -53,8 +53,6 @@ class advancePaymentForm(forms.Form):
             cleaned_data['f_card_token'] = 'mock_card_token'
 
         return cleaned_data
-
-
 
 class monthlyPaymentForm(forms.Form):
     f_order_id = forms.CharField(label='Order ID', required= True)

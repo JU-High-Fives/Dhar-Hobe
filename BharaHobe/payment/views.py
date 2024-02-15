@@ -44,20 +44,6 @@ def select_payment_method_view(request, order_id):
     return render(request, 'payment_method_selection.html', {'order': order})
 
 def advance_payment_view(request, order_id):
-    """
-    View for handling advance payment form.
-
-    If POST request, processes form data, creates PaymentModel, and renders payment success page.
-    If GET request, renders the advance payment form.
-
-    Args:
-        request (HttpRequest): The HTTP request object.
-        order_id (int): The ID of the order for which the payment is being processed.
-
-    Returns:
-        HttpResponse: Rendered template for advance payment form or payment success.
-    """
-
     order = OrderModel.objects.get(pk=order_id)
 
     if request.method == 'POST':
@@ -67,12 +53,14 @@ def advance_payment_view(request, order_id):
             payment_method = form.cleaned_data['f_payment_method']
 
             if payment_method == 'credit_card':
+                card_token = form.cleaned_data['f_card_token']
                 payment = PaymentModel.objects.create(
                     m_order_id=order.m_order_id,
                     m_amount=form.cleaned_data['f_amount'],
                     m_isSuccess=True,
                     m_payment_method='credit_card',
                     m_notes=form.cleaned_data['f_notes'],
+                    m_card_token=card_token
                 )
                 return render(request, 'payment_success.html', {'payment': payment})
 
