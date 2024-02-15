@@ -1,7 +1,6 @@
 from django import forms
-from .mock_payment import MockPaymentGateway, MockPaymentError
+from django.core.exceptions import ValidationError
 
-from django import forms
 
 class advancePaymentForm(forms.Form):
     f_payment_method = forms.ChoiceField(
@@ -22,9 +21,29 @@ class advancePaymentForm(forms.Form):
     f_amount = forms.DecimalField(label='Advance amount', min_value=0.01, required=True)
     f_card_token = forms.CharField(widget=forms.HiddenInput(), required=False)
 
+    def is_valid_credit_card(credit_card):
+        total = 0
+        num_digits = len(credit_card)
+        oddeven = num_digits & 1
+
+        for count in range(0, num_digits):
+            digit = int(credit_card[count])
+
+            if not ((count & 1) ^ oddeven):
+                digit *= 2
+            if digit > 9:
+                digit -= 9
+
+            total += digit
+
+        return total % 10 == 0
+
+
     def clean_f_credit_card_number(self):
-        credit_card_number = self.cleaned_data['f_credit_card_number']
-        return credit_card_number
+        credit_card = self.cleaned_data.get('f_credit_card_number')
+        if not self.is_valid_credit_card(credit_card):
+            raise ValidationError('Invalid credit card number')
+        return credit_card
 
     def clean(self):
         cleaned_data = super().clean()
@@ -34,6 +53,7 @@ class advancePaymentForm(forms.Form):
             cleaned_data['f_card_token'] = 'mock_card_token'
 
         return cleaned_data
+
 
 
 class monthlyPaymentForm(forms.Form):

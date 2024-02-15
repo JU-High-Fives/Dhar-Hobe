@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
 from .models import OrderModel
+from .mock_payment import MockPaymentGateway
+import unittest
 
 class ShowOrdersViewTests(TestCase):
     """
@@ -53,3 +55,7 @@ class ShowOrdersViewTests(TestCase):
 
         self.assertEqual(order_with_blank_notes.m_notes, '')
         self.assertIsNone(order_with_null_notes.m_notes)
+
+
+if __name__ == '__main__':
+    unittest.main()
