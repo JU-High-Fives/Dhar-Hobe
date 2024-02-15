@@ -28,7 +28,12 @@ class advancePaymentForm(forms.Form):
         oddeven = num_digits & 1
 
         for count in range(0, num_digits):
-            digit = int(credit_card[count])
+            digit = credit_card[count]
+
+            if not digit.isdigit():
+                continue
+
+            digit = int(digit)
 
             if not ((count & 1) ^ oddeven):
                 digit *= 2
