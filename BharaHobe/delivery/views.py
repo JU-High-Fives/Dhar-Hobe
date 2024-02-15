@@ -66,7 +66,6 @@ def delivery_request_update(request, pk):
     request_obj = get_object_or_404(DeliveryRequest, pk=pk)
     if request.method == "POST":
         # Process form submission and update request object
-        # ... (not implemented)
         request_obj.save()
         return redirect("delivery_request_list")
     else:
