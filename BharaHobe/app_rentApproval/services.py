@@ -1,4 +1,5 @@
 from django.core.mail import send_mail
+from .models import RenterProductModel
 
 class EmailService:
     """
@@ -9,7 +10,7 @@ class EmailService:
     """
     def send_email(self, renter_email, product_name, renter_name, subject_template, message_template):
         """
-        Sends an email notification to renter.
+        Sends an email notification to the renter.
 
         Parameters:
             renter_email (str): The email address of the renter.
@@ -21,8 +22,8 @@ class EmailService:
         Returns:
             None
         """
-        subject = subject_template.format(product_name=product_name,renter_name=renter_name)
-        message = message_template.format(product_name=product_name,renter_name=renter_name)
+        subject = subject_template.format(product_name=product_name, renter_name=renter_name)
+        message = message_template.format(product_name=product_name, renter_name=renter_name)
         send_mail(subject, message, 'iffat.stu2018@juniv.edu', [renter_email])
 
 class ProductService:
@@ -37,16 +38,16 @@ class ProductService:
         Approves a product request and sends an email notification.
 
         Parameters:
-            renter_product (RenterProduct): The renter product object representing the request to be approved.
+            renter_product (RenterProductModel): The renter product object representing the request to be approved.
 
         Returns:
             None
         """
         # Update the status or perform any other necessary actions
         EmailService().send_email(
-            renter_product.renter.email,
-            renter_product.product.name,
-            renter_product.renter.username,
+            renter_product.m_renter.m_email,
+            renter_product.m_product.m_name,
+            renter_product.m_renter.m_username,
             'Product Approval Notification',
             'Dear {renter_name},\n\nYour request to add {product_name} for rent has been approved.\n\nThank you,\nAdmin,\nDhar Hobe'
         )
@@ -56,16 +57,16 @@ class ProductService:
         Disapproves a product request and sends an email notification.
 
         Parameters:
-            renter_product (RenterProduct): The renter product object representing the request to be disapproved.
+            renter_product (RenterProductModel): The renter product object representing the request to be disapproved.
 
         Returns:
             None
         """
         # Update the status or perform any other necessary actions
         EmailService().send_email(
-            renter_product.renter.email,
-            renter_product.product.name,
-            renter_product.renter.username,
+            renter_product.m_renter.m_email,
+            renter_product.m_product.m_name,
+            renter_product.m_renter.m_username,
             'Product Disapproval Notification',
             'Dear {renter_name},\n\nYour request to add {product_name} for rent has been disapproved:(.\n\nThank you,\nAdmin,\nDhar Hobe'
         )

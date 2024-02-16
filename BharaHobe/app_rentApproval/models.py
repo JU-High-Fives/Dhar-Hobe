@@ -1,34 +1,34 @@
 from django.db import models
 from django.utils import timezone
-# Create your models here.
-class Product(models.Model):
+
+class ProductModel(models.Model):
     """
-    Product
-    =======
+    Product Model
+    =============
     
     Represents a Product to be added by a Renter
     
     Attributes
     ----------
-    name : str
+    m_name : str
         The name of the product.
-    description : str
+    m_description : str
         A description of the product.
-    price : float
+    m_rental_price : float
         The price of the product.
-    quantity_available : int
+    m_quantity_available : int
         The quantity of the product available in stock.
-    created_at : datetime
+    m_created_at : datetime
         The date and time when the product was added to the inventory.
-    updated_at : datetime
+    m_updated_at : datetime
         The date and time when the product information was last updated.
     """
-    name = models.CharField(max_length=255)
-    description = models.TextField()
-    rental_price = models.DecimalField(max_digits=10, decimal_places=2)
-    quantity_available = models.IntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    m_name = models.CharField(max_length=255)
+    m_description = models.TextField()
+    m_rental_price = models.DecimalField(max_digits=10, decimal_places=2)
+    m_quantity_available = models.IntegerField(default=0)
+    m_created_at = models.DateTimeField(auto_now_add=True)
+    m_updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         """
@@ -39,9 +39,9 @@ class Product(models.Model):
         str
             A string representation of the product.
         """
-        return self.name
+        return self.m_name
 
-class Renter(models.Model):
+class RenterModel(models.Model):
     """
     Renter Model
     ============
@@ -50,29 +50,29 @@ class Renter(models.Model):
 
     Attributes
     ----------
-    username : str
+    m_username : str
         The username of the renter.
-    password : str
+    m_password : str
         The password of the renter.
-    email : str
+    m_email : str
         The email address of the renter.
-    address : str
+    m_address : str
         The address of the renter.
-    phone_number : str
+    m_phone_number : str
         The phone number of the renter.
-    created_at : DateTime
+    m_created_at : DateTime
         The date and time when the renter account was created.
-    updated_at : DateTime
+    m_updated_at : DateTime
         The date and time when the renter account was last updated.
     """
 
-    username = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-    email = models.EmailField()
-    address = models.TextField()
-    phone_number = models.CharField(max_length=20)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    m_username = models.CharField(max_length=255)
+    m_password = models.CharField(max_length=255)
+    m_email = models.EmailField()
+    m_address = models.TextField()
+    m_phone_number = models.CharField(max_length=20)
+    m_created_at = models.DateTimeField(auto_now_add=True)
+    m_updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         """
@@ -83,9 +83,9 @@ class Renter(models.Model):
         str
             A string representation of the renter.
         """
-        return self.username
+        return self.m_username
 
-class RenterProduct(models.Model):
+class RenterProductModel(models.Model):
     """
     Renter Product Model
     ====================
@@ -94,24 +94,25 @@ class RenterProduct(models.Model):
 
     Attributes
     ----------
-    renter : ForeignKey to Renter
+    m_renter : ForeignKey to RenterModel
         The renter who wants to add the product for rent.
-    product : ForeignKey to Product
+    m_product : ForeignKey to ProductModel
         The product that the renter wants to add for rent.
-    
-
+    m_approved_at : DateTime
+        The date and time when the product request was approved.
     """
-     # Other fields...
+
+    m_renter = models.ForeignKey(RenterModel,on_delete=models.CASCADE)
+    m_product = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
+    m_approved_at = models.DateTimeField(null=True, blank=True)
+
     IS_APPROVED_CHOICES = (
         ('pending', 'Pending'),
         ('approved', 'Approved'),
         ('disapproved', 'Disapproved'),
     )
-    is_approved = models.CharField(max_length=20, choices=IS_APPROVED_CHOICES, default='pending')
-    
-    renter = models.ForeignKey(Renter,on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    approved_at = models.DateTimeField(null=True, blank=True)
+    m_is_approved = models.CharField(max_length=20, choices=IS_APPROVED_CHOICES, default='pending')
+
     def __str__(self):
         """
         Returns a string representation of the renter product connection.
@@ -121,20 +122,4 @@ class RenterProduct(models.Model):
         str
             A string representation of the renter product connection.
         """
-                
-        return "%s %s" % (self.renter, self.product)
-    # def approve(self):
-    #     """
-    #     Approves the product request and sets the approved_at field to the current datetime.
-    #     """
-    #     self.is_approved = True
-    #     self.approved_at = timezone.now()
-    #     self.save()
-
-    # def disapprove(self):
-    #     """
-    #     Disapproves the product request.
-    #     """
-    #     self.is_approved = False
-    #     self.approved_at = None
-    #     self.save()
+        return "%s %s" % (self.m_renter, self.m_product)

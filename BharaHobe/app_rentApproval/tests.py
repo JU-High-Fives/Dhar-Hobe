@@ -1,7 +1,7 @@
 from django.test import TestCase, RequestFactory,Client
 from django.contrib.auth.models import User
 from django.urls import reverse
-from .models import Renter, Product, RenterProduct
+from .models import RenterModel, ProductModel, RenterProductModel
 from .views import *
 from .views import admin_page
 from .services import EmailService,ProductService
@@ -21,15 +21,15 @@ class AddProductRqstsViewTest(TestCase):
         """
         Test case to verify the behavior of the add_product_rqsts view when products are available for rent.
         """
-        renter = Renter.objects.create(username='testuser', password='testpassword', email='test@example.com',
-                                       address='Test Address', phone_number='1234567890')
-        product1 = Product.objects.create(name='Product 1', description='Description 1', rental_price=10.0,
-                                          quantity_available=5)
-        product2 = Product.objects.create(name='Product 2', description='Description 2', rental_price=15.0,
-                                          quantity_available=8)
+        renter = RenterModel.objects.create(m_username='testuser', m_password='testpassword', m_email='test@example.com',
+                                       m_address='Test Address', m_phone_number='1234567890')
+        product1 = ProductModel.objects.create(m_name='Product 1', m_description='Description 1', m_rental_price=10.0,
+                                          m_quantity_available=5)
+        product2 = ProductModel.objects.create(m_name='Product 2', m_description='Description 2', m_rental_price=15.0,
+                                          m_quantity_available=8)
         
-        RenterProduct.objects.create(renter=renter, product=product1)
-        RenterProduct.objects.create(renter=renter, product=product2)
+        RenterProductModel.objects.create(m_renter=renter, m_product=product1)
+        RenterProductModel.objects.create(m_renter=renter, m_product=product2)
 
         # Create a GET request to the view
         request = self.factory.get(self.url)
@@ -45,8 +45,8 @@ class AddProductRqstsViewTest(TestCase):
         Test case to verify the behavior of the add_product_rqsts view when no products are available for rent.
         """
         # Create a test renter
-        renter = Renter.objects.create(username='testuser', password='testpassword', email='test@example.com',
-                                       address='Test Address', phone_number='1234567890')
+        renter = RenterModel.objects.create(m_username='testuser', m_password='testpassword', m_email='test@example.com',
+                                       m_address='Test Address', m_phone_number='1234567890')
 
         # Create a GET request to the view
         request = self.factory.get(self.url)
@@ -93,9 +93,9 @@ class ApproveProductViewTest(TestCase):
         Set up the test environment.
         """
         self.client = Client()
-        self.renter = Renter.objects.create(username='testuser', email='test@example.com')
-        self.product = Product.objects.create(name='Test Product', rental_price=10.0)
-        self.renter_product = RenterProduct.objects.create(renter=self.renter, product=self.product, is_approved='pending')
+        self.renter = RenterModel.objects.create(m_username='testuser', m_email='test@example.com')
+        self.product = ProductModel.objects.create(m_name='Test Product', m_rental_price=10.0)
+        self.renter_product = RenterProductModel.objects.create(m_renter=self.renter, m_product=self.product, m_is_approved='pending')
 
     def test_approve_product(self):
         """
@@ -109,7 +109,7 @@ class ApproveProductViewTest(TestCase):
         response = self.client.post(url)
         self.assertEqual(response.status_code, 302)  # Check if the response is a redirect
         self.renter_product.refresh_from_db()
-        self.assertEqual(self.renter_product.is_approved, 'approved')
+        self.assertEqual(self.renter_product.m_is_approved, 'approved')
     
 class DisapproveProductViewTest(TestCase):
     """
@@ -122,9 +122,9 @@ class DisapproveProductViewTest(TestCase):
         Set up the test environment.
         """
         self.client = Client()
-        self.renter = Renter.objects.create(username='testuser', email='test@example.com')
-        self.product = Product.objects.create(name='Test Product', rental_price=10.0)
-        self.renter_product = RenterProduct.objects.create(renter=self.renter, product=self.product, is_approved='pending')
+        self.renter = RenterModel.objects.create(m_username='testuser', m_email='test@example.com')
+        self.product = ProductModel.objects.create(m_name='Test Product', m_rental_price=10.0)
+        self.renter_product = RenterProductModel.objects.create(m_renter=self.renter, m_product=self.product, m_is_approved='pending')
 
     def test_disapprove_product(self):
         """
@@ -138,7 +138,7 @@ class DisapproveProductViewTest(TestCase):
         response = self.client.post(url)
         self.assertEqual(response.status_code, 302)  # Check if the response is a redirect
         self.renter_product.refresh_from_db()
-        self.assertEqual(self.renter_product.is_approved, 'disapproved')
+        self.assertEqual(self.renter_product.m_is_approved, 'disapproved')
 
 class ApprovedRequestsViewTest(TestCase):
     """
@@ -160,13 +160,13 @@ class ApprovedRequestsViewTest(TestCase):
         and asserts that the response contains the expected approved product requests.
         """
         # Create approved renter product requests
-        renter1 = Renter.objects.create(username='testuser1', email='test1@example.com')
-        product1 = Product.objects.create(name='Product 1', rental_price=10.0)
-        approved_request1 = RenterProduct.objects.create(renter=renter1, product=product1, is_approved='approved')
+        renter1 = RenterModel.objects.create(m_username='testuser1', m_email='test1@example.com')
+        product1 = ProductModel.objects.create(m_name='Product 1', m_rental_price=10.0)
+        approved_request1 = RenterProductModel.objects.create(m_renter=renter1, m_product=product1, m_is_approved='approved')
 
-        renter2 = Renter.objects.create(username='testuser2', email='test2@example.com')
-        product2 = Product.objects.create(name='Product 2', rental_price=15.0)
-        approved_request2 = RenterProduct.objects.create(renter=renter2, product=product2, is_approved='approved')
+        renter2 = RenterModel.objects.create(m_username='testuser2', m_email='test2@example.com')
+        product2 = ProductModel.objects.create(m_name='Product 2', m_rental_price=15.0)
+        approved_request2 = RenterProductModel.objects.create(m_renter=renter2, m_product=product2, m_is_approved='approved')
 
         request = self.factory.get(reverse('approved_requests'))
         response = approved_requests(request)
@@ -196,13 +196,13 @@ class DisapprovedRequestsViewTest(TestCase):
         and asserts that the response contains the expected disapproved product requests.
         """
         # Create disapproved renter product requests
-        renter1 = Renter.objects.create(username='testuser1', email='test1@example.com')
-        product1 = Product.objects.create(name='Product 1', rental_price=10.0)
-        disapproved_request1 = RenterProduct.objects.create(renter=renter1, product=product1, is_approved='disapproved')
+        renter1 = RenterModel.objects.create(m_username='testuser1', m_email='test1@example.com')
+        product1 = ProductModel.objects.create(m_name='Product 1', m_rental_price=10.0)
+        disapproved_request1 = RenterProductModel.objects.create(m_renter=renter1, m_product=product1, m_is_approved='disapproved')
 
-        renter2 = Renter.objects.create(username='testuser2', email='test2@example.com')
-        product2 = Product.objects.create(name='Product 2', rental_price=15.0)
-        disapproved_request2 = RenterProduct.objects.create(renter=renter2, product=product2, is_approved='disapproved')
+        renter2 = RenterModel.objects.create(m_username='testuser2', m_email='test2@example.com')
+        product2 = ProductModel.objects.create(m_name='Product 2', m_rental_price=15.0)
+        disapproved_request2 = RenterProductModel.objects.create(m_renter=renter2, m_product=product2, m_is_approved='disapproved')
 
         request = self.factory.get(reverse('disapproved_requests'))
         response = disapproved_requests(request)
