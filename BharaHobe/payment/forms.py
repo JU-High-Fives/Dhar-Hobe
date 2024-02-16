@@ -2,7 +2,6 @@ from django import forms
 from django.core.exceptions import ValidationError
 from creditcard import CreditCard 
 
-
 class advancePaymentForm(forms.Form):
     f_payment_method = forms.ChoiceField(
         label='Payment Method',

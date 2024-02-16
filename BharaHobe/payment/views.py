@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import advancePaymentForm, monthlyPaymentForm, emiPaymentForm
 from .models import PaymentModel, OrderModel
-from django.core.exceptions import ValidationError
 from django.http import HttpResponseBadRequest
-
 
 def show_orders(request):
     """
