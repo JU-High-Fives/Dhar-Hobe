@@ -23,6 +23,23 @@ class ShowOrdersViewTests(TestCase):
             m_total_amount=150.50,
             m_notes='Some notes for the order'
         )
+        self.duplicate_order = OrderModel.objects.create(
+            m_order_id='123456', 
+            m_items='Another Item',
+            m_total_amount=30.75,
+        )
+        self.order_with_blank_notes = OrderModel.objects.create(
+            m_order_id='789012',
+            m_items='Item4, Item5',
+            m_total_amount=75.25,
+            m_notes='',
+        )
+        self.order_with_null_notes = OrderModel.objects.create(
+            m_order_id='345678',
+            m_items='Item6, Item7',
+            m_total_amount=120.00,
+            m_notes=None,
+        )
 
     def test_order_str_representation(self):
         """Check whether the order ID representation is correct."""
@@ -30,33 +47,18 @@ class ShowOrdersViewTests(TestCase):
 
     def test_order_unique_constraint(self):
         """Ensure that an order ID is unique."""
-        duplicate_order = OrderModel(
-            m_order_id='123456', 
-            m_items='Another Item',
-            m_total_amount=30.75,
-        )
+        
         with self.assertRaises(Exception):
-            duplicate_order.save()
+            self.duplicate_order.save()
 
     def test_order_notes_blank_or_null(self):
         """Check that the note field can be empty for order creation."""
-        order_with_blank_notes = OrderModel(
-            m_order_id='789012',
-            m_items='Item4, Item5',
-            m_total_amount=75.25,
-            m_notes='',
-        )
-        order_with_null_notes = OrderModel(
-            m_order_id='345678',
-            m_items='Item6, Item7',
-            m_total_amount=120.00,
-            m_notes=None,
-        )
-        order_with_blank_notes.save()
-        order_with_null_notes.save()
+        
+        self.order_with_blank_notes.save()
+        self.order_with_null_notes.save()
 
-        self.assertEqual(order_with_blank_notes.m_notes, '')
-        self.assertIsNone(order_with_null_notes.m_notes)
+        self.assertEqual(self.order_with_blank_notes.m_notes, '')
+        self.assertIsNone(self.order_with_null_notes.m_notes)
 
 
 if __name__ == '__main__':
