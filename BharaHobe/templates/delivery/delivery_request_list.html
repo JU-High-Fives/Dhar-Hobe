@@ -43,6 +43,7 @@
         a {
             text-decoration: none;
             color: #007bff;
+            margin-right: 10px;
         }
 
         a:hover {
@@ -72,8 +73,11 @@
                     <td>{{ request.delivery_destination }}</td>
                     <td>{{ request.status }}</td>
                     <td>
-                        {% if request.status == 'pending' %}
+                        {% if request.status == 'Delivered' %}
+                        Completed
+                        {% elif request.status == 'pending' %}
                         <a href="{% url 'delivery:delivery_request_track' pk=request.pk %}">Track Progress</a>
+                        <a href="{% url 'delivery:delivery_complete' pk=request.pk %}">Complete Delivery</a>
                         {% elif request.status == 'in_progress' %}
                         <a href="{% url 'delivery:delivery_request_track' pk=request.pk %}">Track Progress</a>
                         <a href="{% url 'delivery:delivery_complete' pk=request.pk %}">Complete Delivery</a>

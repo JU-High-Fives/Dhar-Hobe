@@ -86,6 +86,13 @@
                             <a class="nav-link text-white" href="#">Add Product</a>
                         </li>
 
+                        {% if request.user.is_authenticated and request.user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link hover1 text-white" href="{% url 'admin_page' %}">Admin Page</a>
+                        </li>
+                        {% endif %}
+
+
                         <li class="nav-item">
                             <a class="nav-link hover1 text-white" href="{% url 'logout' %}">Logout</a>
                         </li>

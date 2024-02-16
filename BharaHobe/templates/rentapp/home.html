@@ -2,25 +2,59 @@
 {% load static %}
 
 {% block title %}
-Bhara Hobe - Home
+Dhar Hobe - Home
 {% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="styles/home.css"> -->
-</head>
-
-<body>
-    <div class="">
-
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Welcome to Dhar Hobe</h1>
+            <p class="lead">Your one-stop destination for renting furniture, vehicles, decorators, and more!</p>
+            <p>At Dhar Hobe, we offer a diverse range of high-quality items for rent to suit your needs. Whether you're
+                hosting an event, planning a project, or going on an adventure, we've got you covered.</p>
+            <p>Explore our collection and find the perfect items to make your vision a reality.</p>
+            <a href="#" class="btn btn-primary">Browse Catalog</a>
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'images/home-image.jpg' %}" class="img-fluid rounded" alt="Home Image">
+        </div>
     </div>
-</body>
+</div>
 
-</html>
+<div class="container-fluid bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Our Services</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{% static 'images/furniture.jpg' %}" class="card-img-top" alt="Furniture">
+                    <div class="card-body">
+                        <h5 class="card-title">Furniture Rental</h5>
+                        <p class="card-text">Transform your space with our stylish and comfortable furniture rentals.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{% static 'images/vehicles.jpg' %}" class="card-img-top" alt="Vehicles">
+                    <div class="card-body">
+                        <h5 class="card-title">Vehicle Rental</h5>
+                        <p class="card-text">Explore the town or hit the road with our reliable vehicle rentals.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{% static 'images/decorators.jpg' %}" class="card-img-top" alt="Decorators">
+                    <div class="card-body">
+                        <h5 class="card-title">Decorator Services</h5>
+                        <p class="card-text">Make your event unforgettable with our professional decorator services.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
