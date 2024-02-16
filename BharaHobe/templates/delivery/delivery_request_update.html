@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Delivery Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 0;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Update Delivery Request</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="pickup_location">Pickup Location:</label>
+            <input type="text" id="pickup_location" name="pickup_location" required>
+            <label for="delivery_destination">Delivery Destination:</label>
+            <input type="text" id="delivery_destination" name="delivery_destination" required>
+            <label for="size_weight">Size/Weight:</label>
+            <input type="text" id="size_weight" name="size_weight" required>
+            <label for="preferred_delivery_window">Preferred Delivery Window:</label>
+            <input type="text" id="preferred_delivery_window" name="preferred_delivery_window">
+            <label for="special_instructions">Special Instructions:</label>
+            <textarea id="special_instructions" name="special_instructions"></textarea>
+            <button type="submit">Update Request</button>
+        </form>
+    </div>
+</body>
+
+</html>

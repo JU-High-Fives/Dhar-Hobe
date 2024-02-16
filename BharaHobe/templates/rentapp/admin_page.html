@@ -2,48 +2,17 @@
 {% load static %}
 
 {% block content %}
-<html>
-
-<body>
-
+<div class="container">
     <div class="row">
-        <!-- <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Review Product Adding Request</h5>
-                    <p class="card-text">Product adding requests by Renter</p>
-                    <a href="#" class="btn btn-primary">Pending Requests</a>
-                    <a href="#" class="btn btn-primary">Approved Requests</a>
-                    <a href="#" class="btn btn-primary">Disapproved Requests</a>
-                </div>
-            </div>
-        </div> -->
-        <!-- <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Review Product Return Request</h5>
-                    <p class="card-text">Product Return requests by Rentee</p>
-                    <a href="#" class="btn btn-primary">Pending Requests</a>
-                    <a href="#" class="btn btn-primary">Approved Requests</a>
-                    <a href="#" class="btn btn-primary">Disapproved Requests</a>
-                </div>
-            </div>
-
-        </div> -->
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Book Delivery Man</h5>
-                    <p class="card-text">Product Return requests by Rentee</p>
-                    <a href="#" class="btn btn-primary">View</a>
-                    <a href="#" class="btn btn-primary">Book</a>
-
+                    <a href="{% url 'delivery:delivery_request_list' %}" class="btn btn-primary">View</a>
+                    <a href="{% url 'delivery:delivery_request_create' %}" class="btn btn-primary">Book</a>
                 </div>
             </div>
-
         </div>
     </div>
-</body>
-
-</html>
+</div>
 {% endblock %}
