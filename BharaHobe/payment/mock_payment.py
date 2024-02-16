@@ -14,6 +14,8 @@ class MockPaymentGateway:
     Raises:
         MockPaymentError: If the payment encounters an error
     """
+
+    
     def process_payment(amount, credit_card_token):
         success_probability = 0.8
 

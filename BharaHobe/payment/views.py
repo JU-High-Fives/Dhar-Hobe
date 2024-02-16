@@ -30,7 +30,7 @@ def select_payment_method_view(request, order_id):
         HttpResponse: Rendered template for payment method selection or redirect to payment form.
     """
     order = OrderModel.objects.get(pk=order_id)
-
+    
     if request.method == 'POST':
         selected_payment_method = request.POST.get('payment_method')
         if selected_payment_method == 'advance':
@@ -39,9 +39,7 @@ def select_payment_method_view(request, order_id):
             return redirect('monthly_payment_form', order_id=order_id)
         elif selected_payment_method == 'emi':
             return redirect('emi_payment_form', order_id=order_id)
-
     return render(request, 'payment_method_selection.html', {'order': order})
-
 
 def advance_payment_view(request, order_id):
     """
@@ -59,7 +57,7 @@ def advance_payment_view(request, order_id):
 
     """
     order = get_object_or_404(OrderModel, pk=order_id)
-
+    
     if request.method == 'POST':
         form = advancePaymentForm(request.POST)
 
@@ -69,7 +67,6 @@ def advance_payment_view(request, order_id):
             if payment_method == 'credit_card':
                 card_token = form.cleaned_data['f_card_token']
                 amount_to_pay = form.cleaned_data['f_amount']
-
                 existing_payment = PaymentModel.objects.filter(m_order_id=order.m_order_id).first()
 
                 if existing_payment:
@@ -87,10 +84,8 @@ def advance_payment_view(request, order_id):
                     return render(request, 'payment_success.html', {'payment': payment})
                 else:
                     return HttpResponseBadRequest("Please pay the exact amount.")
-
     else:
         form = advancePaymentForm()
-
     return render(request, 'advance_payment_form.html', {'form': form, 'order': order})
 
 def monthly_payment_view(request):
@@ -100,18 +95,18 @@ def monthly_payment_view(request):
     Returns:
         HttpResponse: Rendered template for monthly payment form or payment success.
     """
+
     if request.method == 'POST':
         form = monthlyPaymentForm(request.POST)
+
         if form.is_valid():
             f_order_id = form.cleaned_data['f_order_id']
             f_amount = form.cleaned_data['f_amount']
             f_isSuccess = form.cleaned_data['f_isSuccess']
             payment = PaymentModel.objects.create(m_order_id=f_order_id, m_amount=f_amount, m_isSuccess=f_isSuccess)
             return render(request, 'payment_success.html', {'payment': payment})
-    
     else:
         form = monthlyPaymentForm()
-
     return render(request, 'monthly_payment_form.html', {'form': form})
 
 def emi_payment_view(request):
@@ -121,8 +116,10 @@ def emi_payment_view(request):
     Returns:
         HttpResponse: Rendered template for EMI payment form or payment success.
     """
+    
     if request.method == 'POST':
         form = emiPaymentForm(request.POST)
+        
         if form.is_valid():
             f_order_id = form.cleaned_data['f_order_id']
             f_amount = form.cleaned_data['f_amount']
@@ -144,6 +141,5 @@ def payment_success(request):
         HttpResponse: Rendered template for payment success
     """
     latest_payment = PaymentModel.objects.filter(m_isSuccess=True).order_by('-id').first()
-
     return render(request, 'payment_success.html', {'latest_payment': latest_payment})
 

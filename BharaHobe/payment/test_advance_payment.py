@@ -16,6 +16,8 @@ class TestAdvancePaymentForm(TestCase):
         test_invalid_credit_card: Test form validation for an invalid credit card.
         test_duplicate_payment: Test for attempting to make a duplicate payment.
     """
+
+
     def setUp(self):
         """Set up common data for the test cases."""
         self.valid_credit_card_data = {
@@ -42,7 +44,6 @@ class TestAdvancePaymentForm(TestCase):
 
     def test_valid_credit_card(self):
         """Test form validation for a valid credit card."""
-        
         form = advancePaymentForm(data=self.form_data)
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data['f_card_token'], 'mock_card_token')

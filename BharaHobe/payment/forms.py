@@ -22,6 +22,7 @@ class advancePaymentForm(forms.Form):
     f_amount = forms.DecimalField(label='Advance amount', min_value=0.01, required=True)
     f_card_token = forms.CharField(widget=forms.HiddenInput(), required=False)
 
+
     def is_valid_credit_card(self, credit_card):
         """
         Check if the provided credit card number is valid.
@@ -32,8 +33,12 @@ class advancePaymentForm(forms.Form):
         Returns:
             bool: True if the credit card is valid, False otherwise.
         """
-        if not (CreditCard(credit_card).is_valid() and CreditCard(credit_card).is_luhn_valid() and
-                credit_card.isdigit() and len(credit_card) == 16):
+        
+        if not (CreditCard(credit_card).is_valid() 
+                and CreditCard(credit_card).is_luhn_valid() 
+                and credit_card.isdigit() 
+                and len(credit_card) == 16
+                ):
             return True
         else:
             return False
@@ -49,10 +54,9 @@ class advancePaymentForm(forms.Form):
             ValidationError: If the credit card number is invalid.
         """
         credit_card = self.cleaned_data.get('f_credit_card_number')
-
+        
         if self.is_valid_credit_card(credit_card):
             return credit_card
-
         raise ValidationError('Invalid credit card number')
 
     def clean(self):
@@ -64,10 +68,9 @@ class advancePaymentForm(forms.Form):
         """
         cleaned_data = super().clean()
         payment_method = cleaned_data.get('f_payment_method')
-
+        
         if payment_method == 'credit_card':
             cleaned_data['f_card_token'] = 'mock_card_token'
-
         return cleaned_data
     
 class monthlyPaymentForm(forms.Form):

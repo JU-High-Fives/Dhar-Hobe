@@ -15,6 +15,8 @@ class ShowOrdersViewTests(TestCase):
         test_order_unique_constraint: Ensures that an order ID is unique.
         test_order_notes_blank_or_null: Checks that the note field can be empty for order creation.
     """
+
+
     def setUp(self):
         """Create a dummy OrderModel instance for testing."""
         self.order = OrderModel.objects.create(
@@ -47,16 +49,13 @@ class ShowOrdersViewTests(TestCase):
 
     def test_order_unique_constraint(self):
         """Ensure that an order ID is unique."""
-        
         with self.assertRaises(Exception):
             self.duplicate_order.save()
 
     def test_order_notes_blank_or_null(self):
-        """Check that the note field can be empty for order creation."""
-        
+        """Check that the note field can be empty for order creation."""  
         self.order_with_blank_notes.save()
         self.order_with_null_notes.save()
-
         self.assertEqual(self.order_with_blank_notes.m_notes, '')
         self.assertIsNone(self.order_with_null_notes.m_notes)
 
