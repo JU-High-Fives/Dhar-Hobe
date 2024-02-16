@@ -54,14 +54,18 @@ def advance_payment_view(request, order_id):
 
             if payment_method == 'credit_card':
                 card_token = form.cleaned_data['f_card_token']
-                payment = PaymentModel.objects.create(
-                    m_order_id=order.m_order_id,
-                    m_amount=form.cleaned_data['f_amount'],
-                    m_isSuccess=True,
-                    m_payment_method='credit_card',
-                    m_notes=form.cleaned_data['f_notes'],
-                    m_card_token=card_token
-                )
+                if form.cleaned_data['f_amount'] == order.m_total_amount:
+                    payment = PaymentModel.objects.create(
+                        m_order_id=order.m_order_id,
+                        m_amount=form.cleaned_data['f_amount'],
+                        m_isSuccess=True,
+                        m_payment_method='credit_card',
+                        m_notes=form.cleaned_data['f_notes'],
+                        m_card_token=card_token
+                    )
+                else:
+                    raise ValueError("Please pay full amount")
+                
                 return render(request, 'payment_success.html', {'payment': payment})
 
     else:

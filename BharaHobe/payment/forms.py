@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from creditcard import CreditCard 
 
 
 class advancePaymentForm(forms.Form):
@@ -21,30 +22,14 @@ class advancePaymentForm(forms.Form):
     f_amount = forms.DecimalField(label='Advance amount', min_value=0.01, required=True)
     f_card_token = forms.CharField(widget=forms.HiddenInput(), required=False)
 
-    @staticmethod
-    def is_valid_credit_card(credit_card):
-        total = 0
-        num_digits = len(credit_card)
-        oddeven = num_digits & 1
+    def is_valid_credit_card(self, credit_card):
+        try:
+            card = CreditCard(credit_card)
+            return card.is_valid() and card.is_luhn_valid()
+        except ValueError:
+            return False
 
-        for count in range(0, num_digits):
-            digit = credit_card[count]
-
-            if not digit.isdigit():
-                continue
-
-            digit = int(digit)
-
-            if not ((count & 1) ^ oddeven):
-                digit *= 2
-            if digit > 9:
-                digit -= 9
-
-            total += digit
-
-        return total % 10 == 0
-
-    def clean_f_credit_card_number(self):
+    def clean_credit_card_number(self):
         credit_card = self.cleaned_data.get('f_credit_card_number')
         if not self.is_valid_credit_card(credit_card):
             raise ValidationError('Invalid credit card number')
