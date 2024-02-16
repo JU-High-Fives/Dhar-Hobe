@@ -25,4 +25,4 @@ class Profile(models.Model):
         """
         String representation of the profile.
         """
-        return self.user.username
+        return self.m_user.username

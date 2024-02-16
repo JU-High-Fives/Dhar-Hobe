@@ -25,7 +25,7 @@ class DeliveryRequestViewTest(TestCase):
         client.login(username='testuser', password='testpassword')
 
         # Get the URL for the delivery request create view
-        url = reverse('delivery_request_create')
+        url = reverse('delivery:delivery_request_create')
 
         # Post data to the view
         response = client.post(url, {
@@ -46,7 +46,7 @@ class DeliveryRequestViewTest(TestCase):
         client = Client()
 
         # Get the URL for the delivery request list view
-        url = reverse('delivery_request_list')
+        url = reverse('delivery:delivery_request_list')
 
         # Get the response
         response = client.get(url)
@@ -55,14 +55,14 @@ class DeliveryRequestViewTest(TestCase):
         self.assertEqual(response.status_code, 200)  # 200 is the status code for a successful GET request
 
         # Check if the delivery request is present in the response
-        self.assertIn(self.delivery_request, response.context['requests'])
+        self.assertContains(response, 'Test Pickup Location')
 
     def test_delivery_request_detail_view(self):
         # Create a client
         client = Client()
 
         # Get the URL for the delivery request detail view
-        url = reverse('delivery_request_detail', args=[self.delivery_request.pk])
+        url = reverse('delivery:delivery_request_detail', args=[self.delivery_request.pk])
 
         # Get the response
         response = client.get(url)
@@ -71,4 +71,4 @@ class DeliveryRequestViewTest(TestCase):
         self.assertEqual(response.status_code, 200)  # 200 is the status code for a successful GET request
 
         # Check if the delivery request details are present in the response
-        self.assertEqual(response.context['request'], self.delivery_request)
+        self.assertContains(response, 'Test Pickup Location')

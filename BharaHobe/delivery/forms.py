@@ -19,7 +19,7 @@ class deliveryRequestForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         """
-        Constructor for the DeliveryRequestForm.
+        Constructor for the deliveryRequestForm.
         """
         super().__init__(*args, **kwargs)
         # Perform any additional initialization here if needed.

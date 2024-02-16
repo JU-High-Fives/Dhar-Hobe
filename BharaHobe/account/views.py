@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.views.generic import DetailView, CreateView, UpdateView
 from . models import Profile               # Importing Profile model from models.py
-from .forms import ProfilePageForm, EditProfileForm   # Importing forms from forms.py
+from .forms import profilePageForm, editProfileForm   # Importing forms from forms.py
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -71,7 +71,7 @@ class CreateProfilePageView(CreateView):
     View class for creating user profile page.
     """
     model = Profile
-    form_class = ProfilePageForm
+    form_class = profilePageForm
     template_name = "accounts/create_user_profile_page.html"
     #fields = '__all__'
 

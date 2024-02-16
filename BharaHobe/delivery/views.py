@@ -36,7 +36,7 @@ def delivery_request_create(request):
 
             return redirect('delivery:delivery_request_list')
     else:
-        form = DeliveryRequestForm()
+        form = deliveryRequestForm()
     return render(request, "delivery/delivery_request_form.html", {'form': form})
 
 def delivery_request_list(request):

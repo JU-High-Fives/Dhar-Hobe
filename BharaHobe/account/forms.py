@@ -1,6 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import (UserChangeForm
-                                       )
+from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
 from .models import Profile
 
@@ -11,16 +10,15 @@ class profilePageForm(forms.ModelForm):
     """
     class Meta:
         model = Profile
-        fields = ('bio', 'profile_pic', 'email', 'facebook_url',
-                  )
+        fields = ('m_bio', 'm_profile_pic', 'm_email', 'm_facebook_url')  # Use correct field names
 
         widgets = {
-            'bio': forms.Textarea(attrs={'class': 'form-control'}),
-            'profile_pic': forms.FileInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'facebook_url': forms.URLInput(attrs={'class': 'form-control'}),
-            
+            'm_bio': forms.Textarea(attrs={'class': 'form-control'}),
+            'm_profile_pic': forms.FileInput(attrs={'class': 'form-control'}),
+            'm_email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'm_facebook_url': forms.URLInput(attrs={'class': 'form-control'}),      
         }
+
 
 class editProfileForm(UserChangeForm):
     """
