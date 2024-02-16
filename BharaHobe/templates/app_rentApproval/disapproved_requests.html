@@ -17,9 +17,9 @@
         <tbody>
             {% for request in disapproved_requests %}
                 <tr>
-                    <td>{{ request.renter.username }}</td>
-                    <td>{{ request.product.name }}</td>
-                    <td>{{ request.approved_at }}</td>
+                    <td>{{ request.m_renter.m_username }}</td>
+                    <td>{{ request.m_product.m_name }}</td>
+                    <td>{{ request.m_approved_at }}</td>
                 </tr>
             {% endfor %}
         </tbody>
