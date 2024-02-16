@@ -94,3 +94,5 @@ def delivery_complete(request, pk):
         
         return redirect('delivery:delivery_request_list')
     return render(request, 'delivery/delivery_complete.html', {'request': request_obj})
+
+

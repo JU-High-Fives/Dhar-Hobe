@@ -67,11 +67,11 @@
 
         <div class="actions">
             {% if request.status == 'pending' %}
-            <a href="{% url 'delivery:delivery_request_track' pk=request.pk %}">Track Delivery Progress</a>
+            <a href="{% url 'delivery_request_track' pk=request.pk %}">Track Delivery Progress</a>
             {% endif %}
             {% if request.status == 'in_progress' %}
-            <a href="{% url 'delivery:delivery_request_track' pk=request.pk %}">Track Delivery Progress</a>
-            <a href="{% url 'delivery:delivery_complete' pk=request.pk %}">Complete Delivery</a>
+            <a href="{% url 'delivery_request_track' pk=request.pk %}">Track Delivery Progress</a>
+            <a href="{% url 'delivery_complete' pk=request.pk %}">Complete Delivery</a>
             {% endif %}
         </div>
     </div>
