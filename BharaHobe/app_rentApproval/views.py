@@ -77,7 +77,6 @@ def add_product_rqsts(request):
         
         renter_product = RenterProductModel.objects.get(id=request_id)
         ProductService().handle_action(action, renter_product)
-
     requests = RenterProductModel.objects.filter(m_is_approved='pending')
     
     if not requests:
