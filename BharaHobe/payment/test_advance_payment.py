@@ -1,9 +1,21 @@
-# test_advance_payment.py
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from .forms import advancePaymentForm
 
 class TestAdvancePaymentForm(TestCase):
+    """
+    Test cases for the Advance Payment Form.
+
+    Attributes:
+        valid_credit_card_data (advancePaymentFormData): Valid form data for advance payment.
+        invalid_credit_card_data (advancePaymentFormData): Invalid form data for advance payment.
+
+    Methods:
+        setUp: Sets up common data for the test cases.
+        test_valid_credit_card: Test form validation for a valid credit card.
+        test_invalid_credit_card: Test form validation for an invalid credit card.
+        test_duplicate_payment: Test for attempting to make a duplicate payment.
+    """
     def setUp(self):
         """Set up common data for the test cases."""
         self.valid_credit_card_data = {
@@ -15,7 +27,7 @@ class TestAdvancePaymentForm(TestCase):
         }
         self.invalid_credit_card_data = {
             'f_payment_method': 'credit_card',
-            'f_credit_card_number': '0000000000000000',  # This is an invalid credit card number
+            'f_credit_card_number': '0000',
             'f_notes': 'Test notes',
             'f_amount': 100.00,
             'f_card_token': '',

@@ -23,9 +23,6 @@ def select_payment_method_view(request, order_id):
     """
     View for selecting payment method.
 
-    If POST request, redirects to the chosen payment form,
-    else renders the payment method selection page.
-
     Args:
         order_id (int): The ID of the selected order.
 
@@ -47,6 +44,20 @@ def select_payment_method_view(request, order_id):
 
 
 def advance_payment_view(request, order_id):
+    """
+    View for processing advance payments.
+
+    Args:
+        request (HttpRequest): The HTTP request.
+        order_id (int): The ID of the order for which the payment is being made.
+
+    Returns:
+        HttpResponse: Rendered HTML response.
+
+    Raises:
+        None
+
+    """
     order = get_object_or_404(OrderModel, pk=order_id)
 
     if request.method == 'POST':
@@ -86,9 +97,6 @@ def monthly_payment_view(request):
     """
     View for handling monthly payment form.
 
-    If POST request, processes form data, creates PaymentModel, and renders payment success page.
-    If GET request, renders the monthly payment form.
-
     Returns:
         HttpResponse: Rendered template for monthly payment form or payment success.
     """
@@ -110,9 +118,6 @@ def emi_payment_view(request):
     """
     View for handling EMI payment form.
 
-    If POST request, processes form data, creates PaymentModel, and renders payment success page.
-    If GET request, renders the EMI payment form.
-
     Returns:
         HttpResponse: Rendered template for EMI payment form or payment success.
     """
@@ -132,7 +137,8 @@ def emi_payment_view(request):
 def payment_success(request):
     """This function renders the payment success page.
 
-    Displays details of the successful payment.
+    Args:
+        request (HttpRequest): The HTTP request.
 
     Returns:
         HttpResponse: Rendered template for payment success

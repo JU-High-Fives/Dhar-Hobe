@@ -1,14 +1,22 @@
 from django.test import TestCase
-from django.urls import reverse
 from .models import OrderModel
-from .mock_payment import MockPaymentGateway
 import unittest
 
 class ShowOrdersViewTests(TestCase):
     """
-    This function creates an order
+    Test cases for the Show Orders View.
+
+    Attributes:
+        order (OrderModel): A dummy instance of OrderModel for testing.
+
+    Methods:
+        setUp: Creates a dummy OrderModel instance for testing.
+        test_order_str_representation: Checks the correctness of the order ID representation.
+        test_order_unique_constraint: Ensures that an order ID is unique.
+        test_order_notes_blank_or_null: Checks that the note field can be empty for order creation.
     """
     def setUp(self):
+        """Create a dummy OrderModel instance for testing."""
         self.order = OrderModel.objects.create(
             m_order_id='123456',
             m_items='Item1, Item2, Item3',
@@ -16,16 +24,12 @@ class ShowOrdersViewTests(TestCase):
             m_notes='Some notes for the order'
         )
 
-    """
-    This functions checks whether order id is correct or not
-    """
     def test_order_str_representation(self):
+        """Check whether the order ID representation is correct."""
         self.assertEqual(str(self.order), "Order #123456")
 
-    """
-    This function ensures an order is unique
-    """
     def test_order_unique_constraint(self):
+        """Ensure that an order ID is unique."""
         duplicate_order = OrderModel(
             m_order_id='123456', 
             m_items='Another Item',
@@ -34,10 +38,8 @@ class ShowOrdersViewTests(TestCase):
         with self.assertRaises(Exception):
             duplicate_order.save()
 
-    """
-    This function checks that the note field can be empty for order creation
-    """
     def test_order_notes_blank_or_null(self):
+        """Check that the note field can be empty for order creation."""
         order_with_blank_notes = OrderModel(
             m_order_id='789012',
             m_items='Item4, Item5',
