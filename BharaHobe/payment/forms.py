@@ -23,17 +23,18 @@ class advancePaymentForm(forms.Form):
     f_card_token = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def is_valid_credit_card(self, credit_card):
-        try:
-            card = CreditCard(credit_card)
-            return card.is_valid() and card.is_luhn_valid()
-        except ValueError:
+        if not credit_card.is_valid() or not credit_card.is_luhn_valid() and not (credit_card.isdigit() and len(credit_card) == 16):
+            return True
+        else:
             return False
 
     def clean_credit_card_number(self):
         credit_card = self.cleaned_data.get('f_credit_card_number')
-        if not self.is_valid_credit_card(credit_card):
-            raise ValidationError('Invalid credit card number')
-        return credit_card
+
+        if self.is_valid_credit_card(credit_card):
+            return credit_card
+
+        raise ValidationError('Invalid credit card number')
 
     def clean(self):
         cleaned_data = super().clean()

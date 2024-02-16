@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import advancePaymentForm, monthlyPaymentForm, emiPaymentForm
 from .models import PaymentModel, OrderModel
-from .mock_payment import MockPaymentError, MockPaymentGateway
+from django.core.exceptions import ValidationError
+from django.http import HttpResponseBadRequest
+
 
 def show_orders(request):
     """
@@ -43,31 +45,30 @@ def select_payment_method_view(request, order_id):
 
     return render(request, 'payment_method_selection.html', {'order': order})
 
+
 def advance_payment_view(request, order_id):
-    order = OrderModel.objects.get(pk=order_id)
+    order = get_object_or_404(OrderModel, pk=order_id)
 
     if request.method == 'POST':
         form = advancePaymentForm(request.POST)
-
         if form.is_valid():
             payment_method = form.cleaned_data['f_payment_method']
-
             if payment_method == 'credit_card':
                 card_token = form.cleaned_data['f_card_token']
-                if form.cleaned_data['f_amount'] == order.m_total_amount:
+                amount_to_pay = form.cleaned_data['f_amount']
+
+                if amount_to_pay == order.m_total_amount:
                     payment = PaymentModel.objects.create(
                         m_order_id=order.m_order_id,
-                        m_amount=form.cleaned_data['f_amount'],
+                        m_amount=amount_to_pay,
                         m_isSuccess=True,
                         m_payment_method='credit_card',
                         m_notes=form.cleaned_data['f_notes'],
                         m_card_token=card_token
                     )
+                    return render(request, 'payment_success.html', {'payment': payment})
                 else:
-                    raise ValueError("Please pay full amount")
-                
-                return render(request, 'payment_success.html', {'payment': payment})
-
+                    raise ValueError("Please pay the exact amount.")
     else:
         form = advancePaymentForm()
 
