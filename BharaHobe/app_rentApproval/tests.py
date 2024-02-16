@@ -83,13 +83,28 @@ class AdminPageViewTest(TestCase):
         self.assertTemplateUsed(response, 'app_rentApproval/admin_page.html')
 
 class ApproveProductViewTest(TestCase):
+    """
+    Test case for the approve_product view.
+
+    This test case checks the behavior of the approve_product view function.
+    """
     def setUp(self):
+        """
+        Set up the test environment.
+        """
         self.client = Client()
         self.renter = Renter.objects.create(username='testuser', email='test@example.com')
         self.product = Product.objects.create(name='Test Product', rental_price=10.0)
         self.renter_product = RenterProduct.objects.create(renter=self.renter, product=self.product, is_approved='pending')
 
     def test_approve_product(self):
+        """
+        Test case to verify the behavior of the approve_product view.
+
+        This test case sends a POST request to the view to approve a product request,
+        checks if the response is a redirect, and verifies that the product request's
+        approval status is updated to 'approved'.
+        """
         url = reverse('approve_product', kwargs={'request_id': self.renter_product.id})
         response = self.client.post(url)
         self.assertEqual(response.status_code, 302)  # Check if the response is a redirect
@@ -97,13 +112,28 @@ class ApproveProductViewTest(TestCase):
         self.assertEqual(self.renter_product.is_approved, 'approved')
     
 class DisapproveProductViewTest(TestCase):
+    """
+    Test case for the disapprove_product view.
+
+    This test case checks the behavior of the disapprove_product view function.
+    """
     def setUp(self):
+        """
+        Set up the test environment.
+        """
         self.client = Client()
         self.renter = Renter.objects.create(username='testuser', email='test@example.com')
         self.product = Product.objects.create(name='Test Product', rental_price=10.0)
         self.renter_product = RenterProduct.objects.create(renter=self.renter, product=self.product, is_approved='pending')
 
     def test_disapprove_product(self):
+        """
+        Test case to verify the behavior of the disapprove_product view.
+
+        This test case sends a POST request to the view to disapprove a product request,
+        checks if the response is a redirect, and verifies that the product request's
+        approval status is updated to 'disapproved'.
+        """
         url = reverse('disapprove_product', kwargs={'request_id': self.renter_product.id})
         response = self.client.post(url)
         self.assertEqual(response.status_code, 302)  # Check if the response is a redirect
@@ -111,10 +141,24 @@ class DisapproveProductViewTest(TestCase):
         self.assertEqual(self.renter_product.is_approved, 'disapproved')
 
 class ApprovedRequestsViewTest(TestCase):
+    """
+    Test case for the approved_requests view.
+
+    This test case checks the behavior of the approved_requests view function.
+    """
     def setUp(self):
+        """
+        Set up the test environment.
+        """
         self.factory = RequestFactory()
 
     def test_approved_requests(self):
+        """
+        Test case to verify the behavior of the approved_requests view.
+
+        This test case creates approved product requests, sends a GET request to the view,
+        and asserts that the response contains the expected approved product requests.
+        """
         # Create approved renter product requests
         renter1 = Renter.objects.create(username='testuser1', email='test1@example.com')
         product1 = Product.objects.create(name='Product 1', rental_price=10.0)
@@ -133,10 +177,24 @@ class ApprovedRequestsViewTest(TestCase):
         self.assertNotContains(response, 'No approved requests')
 
 class DisapprovedRequestsViewTest(TestCase):
+    """
+    Test case for the disapproved_requests view.
+
+    This test case checks the behavior of the disapproved_requests view function.
+    """
     def setUp(self):
+        """
+        Set up the test environment.
+        """
         self.factory = RequestFactory()
 
     def test_disapproved_requests(self):
+        """
+        Test case to verify the behavior of the disapproved_requests view.
+
+        This test case creates disapproved product requests, sends a GET request to the view,
+        and asserts that the response contains the expected disapproved product requests.
+        """
         # Create disapproved renter product requests
         renter1 = Renter.objects.create(username='testuser1', email='test1@example.com')
         product1 = Product.objects.create(name='Product 1', rental_price=10.0)
