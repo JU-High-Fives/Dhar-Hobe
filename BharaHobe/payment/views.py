@@ -51,8 +51,10 @@ def advance_payment_view(request, order_id):
 
     if request.method == 'POST':
         form = advancePaymentForm(request.POST)
+
         if form.is_valid():
             payment_method = form.cleaned_data['f_payment_method']
+
             if payment_method == 'credit_card':
                 card_token = form.cleaned_data['f_card_token']
                 amount_to_pay = form.cleaned_data['f_amount']
@@ -68,7 +70,8 @@ def advance_payment_view(request, order_id):
                     )
                     return render(request, 'payment_success.html', {'payment': payment})
                 else:
-                    raise ValueError("Please pay the exact amount.")
+                    return HttpResponseBadRequest("Please pay the exact amount.")
+
     else:
         form = advancePaymentForm()
 
