@@ -59,6 +59,11 @@ def advance_payment_view(request, order_id):
                 card_token = form.cleaned_data['f_card_token']
                 amount_to_pay = form.cleaned_data['f_amount']
 
+                existing_payment = PaymentModel.objects.filter(m_order_id=order.m_order_id).first()
+
+                if existing_payment:
+                    return HttpResponseBadRequest("Payment for this order has already been made.")
+
                 if amount_to_pay == order.m_total_amount:
                     payment = PaymentModel.objects.create(
                         m_order_id=order.m_order_id,
