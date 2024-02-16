@@ -2,7 +2,7 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import DeliveryRequestForm
+from .forms import deliveryRequestForm
 from .models import DeliveryRequest
 from django.contrib import messages
 from django.utils.html import strip_tags
@@ -18,7 +18,7 @@ def delivery_request_create(request):
     If the request method is GET, render the empty form.
     """
     if request.method == "POST":
-        form = DeliveryRequestForm(request.POST)
+        form = deliveryRequestForm(request.POST)
         if form.is_valid():
             new_request = form.save(commit=False)
             new_request.user = request.user
