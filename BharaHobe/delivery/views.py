@@ -27,12 +27,12 @@ def delivery_request_create(request):
             # Send confirmation message to user
             messages.success(request, 'Your delivery request has been submitted successfully.')
 
-            # Notify admin
-            admin_email = 'admin@example.com'  # Change this to your admin's email address
+            # Notify pathao
+            pathao_email = 'pathao@gmail.com'  
             subject = 'New Delivery Request'
             html_message = render_to_string('delivery/new_delivery_request.html', {'request': new_request})
             plain_message = strip_tags(html_message)
-            send_mail(subject, plain_message, 'your@example.com', [admin_email], html_message=html_message)
+            send_mail(subject, plain_message, 'jucse28.347@gmail.com', [pathao_email], html_message=html_message)
 
             return redirect('delivery:delivery_request_list')
     else:
