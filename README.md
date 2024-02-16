@@ -10,3 +10,42 @@ Batch 48, Department of Computer Science & Engineering, Jahangirnagar University
 3. Sumaita Binte Shorif (SB) - 357
 4. Amena Akter Sathi (AA)- 351
 5. Fariha Rahman Saba (FR) - 347
+
+# How to Use
+## 1. Clone the project
+- Install git bash
+- Open your local directory's git bash terminal
+- Configure git:
+    
+  `git config --global user.name <github_username>`
+  
+  `git config --global user.email <github_email>`
+    
+- Run command:
+    
+  `git clone https://github.com/JU-High-Fives/Dhar-Hobe.git`
+
+## 2. Navigate to the project directory commands
+- Navigate:
+  `cd BharaHobe`
+- Open VS Code:
+  `code .`
+- Open terminal:
+  `Ctrl + J`
+  
+## 3. Run the Project:
+- Check Python:
+  `python --version`
+
+  If python not found, [install](https://youtu.be/Gznz5Slw2Qg?si=PC2ZsaJLipd_8ERQ) python.
+  
+- Check Django:
+  `python -m django --version`
+
+  If Django is not found, install by running:
+  `pip install django`
+  
+- Run the project:
+   `python manage.py runserver`
+  
+- Click and Follow: `http://127.0.0.1:8000/` 
