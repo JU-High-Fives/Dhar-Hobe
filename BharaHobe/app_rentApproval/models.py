@@ -123,3 +123,47 @@ class RenterProductModel(models.Model):
             A string representation of the renter product connection.
         """
         return "%s %s" % (self.m_renter, self.m_product)
+
+class RenteeModel(models.Model):
+    """
+    Rentee Model
+    ============
+
+    Represents a rentee with a username, password, email, address, and phone number.
+
+    Attributes
+    ----------
+    m_username : str
+        The username of the rentee.
+    m_password : str
+        The password of the rentee.
+    m_email : str
+        The email address of the rentee.
+    m_address : str
+        The address of the rentee.
+    m_phone_number : str
+        The phone number of the rentee.
+    m_created_at : DateTime
+        The date and time when the rentee account was created.
+    m_updated_at : DateTime
+        The date and time when the rentee account was last updated.
+    """
+
+    m_username = models.CharField(max_length=255)
+    m_password = models.CharField(max_length=255)
+    m_email = models.EmailField()
+    m_address = models.TextField()
+    m_phone_number = models.CharField(max_length=20)
+    m_created_at = models.DateTimeField(auto_now_add=True)
+    m_updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        """
+        Returns a string representation of the renter.
+
+        Returns
+        -------
+        str
+            A string representation of the renter.
+        """
+        return self.m_username
