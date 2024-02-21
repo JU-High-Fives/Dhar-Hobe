@@ -35,3 +35,20 @@ def search_view(request):
     else:
         form = SearchForm()
     return render(request, 'search_form.html', {'form': form})
+# cartapp/views.py
+
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .models import Cart, CartItem
+from .serializers import CartSerializer, CartItemSerializer
+
+@api_view(['POST'])
+def add_to_cart(request):
+    # Logic for adding items to the cart
+    ...
+
+@api_view(['GET'])
+def get_cart_details(request):
+    # Logic for retrieving cart details
+    ...
