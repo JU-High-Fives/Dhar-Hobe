@@ -14,7 +14,7 @@ def initiate_return_request(request, item_id):
             return redirect('return_request_confirmation')
     else:
         form = ReturnRequestForm()
-    return render(request, 'initiate_return_request.html', {'form': form, 'item': item})
+    return render(request, 'return/initiate_return_request.html', {'form': form, 'item': item})
 
 def return_request_confirmation(request):
-    return render(request, 'return_request_confirmation.html')
+    return render(request, 'return/return_request_confirmation.html')

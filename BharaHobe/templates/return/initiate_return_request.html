@@ -5,15 +5,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Initiate Return Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: #007bff;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Initiate Return Request for {{ item.name }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
+    <div class="container">
+        <h1>Initiate Return Request for {{ item.name }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="id_reason">Reason for return:</label>
+            <select id="id_reason" name="reason">
+                <option value="defective">Defective</option>
+                <option value="damaged">Damaged</option>
+                <option value="incorrect">Incorrect</option>
+                <option value="changed_mind">Changed Mind</option>
+            </select>
+            <label for="id_desired_resolution">Desired resolution:</label>
+            <select id="id_desired_resolution" name="desired_resolution">
+                <option value="refund">Refund</option>
+                <option value="replacement">Replacement</option>
+                <option value="exchange">Exchange</option>
+            </select>
+            <label for="id_supporting_evidence">Supporting evidence:</label>
+            <textarea id="id_supporting_evidence" name="supporting_evidence"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 
 </html>
