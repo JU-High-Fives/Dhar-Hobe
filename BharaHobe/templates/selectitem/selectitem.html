@@ -1,0 +1,21 @@
+<!-- select_item.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Item</title>
+</head>
+<body>
+    <h1>Select an Item</h1>
+    <form action="{% url 'process_selection' %}" method="post">
+        {% csrf_token %}
+        <select name="item_id">
+            {% for item in items %}
+                <option value="{{ item.id }}">{{ item.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
