@@ -28,4 +28,6 @@ urlpatterns = [
     path('admin-page/', views.admin_page, name='admin_page'),
     # Include delivery request app URLs
     path('delivery-requests/', include('delivery.urls', namespace='delivery_requests')),
+    path('return/', include('return.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

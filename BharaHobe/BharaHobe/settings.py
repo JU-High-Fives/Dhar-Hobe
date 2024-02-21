@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'account',
     'rentapp',
     'delivery',
+    'return',
 ]
 
 MIDDLEWARE = [
