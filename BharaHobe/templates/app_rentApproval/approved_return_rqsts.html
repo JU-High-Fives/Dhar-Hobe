@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+    <h1 style="text-align: center;">Approved Return Requests</h1>
+</div>
+<div>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Rentee</th>
+                <th>Product</th>
+                <th>Approval Date & Time</th>
+            </tr>
+        </thead>
+        <!-- <tbody>
+            {% for request in approved_requests %}
+                <tr>
+                    <td>{{ request.m_renter.m_username }}</td>
+                    <td>{{ request.m_product.m_name }}</td>
+                    <td>{{ request.m_approved_at }}</td>
+                </tr>
+            {% endfor %}
+        </tbody> -->
+    </table>
+</div>
+{% endblock %}

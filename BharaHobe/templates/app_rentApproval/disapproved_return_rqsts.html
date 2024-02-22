@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+    <h1 style="text-align: center;">Disapproved Return Requests</h1>
+</div>
+<div>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Renter</th>
+                <th>Product</th>
+                <th>Disapproval Date & Time</th>
+            </tr>
+        </thead>
+        <!-- <tbody>
+            {% for request in disapproved_requests %}
+                <tr>
+                    <td>{{ request.m_renter.m_username }}</td>
+                    <td>{{ request.m_product.m_name }}</td>
+                    <td>{{ request.m_approved_at }}</td>
+                </tr>
+            {% endfor %}
+        </tbody> -->
+    </table>
+</div>
+{% endblock %}
