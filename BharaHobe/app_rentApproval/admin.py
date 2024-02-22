@@ -4,3 +4,5 @@ from .models import *
 admin.site.register(RenterProductModel)
 admin.site.register(ProductModel)
 admin.site.register(RenterModel)
+admin.site.register(RenteeModel)
+admin.site.register(ReturnRequestModel)

@@ -111,3 +111,8 @@ def disapproved_requests(request):
     disapproved_requests = RenterProductModel.objects.filter(m_is_approved='disapproved')
     context = {'disapproved_requests': disapproved_requests}
     return render(request, 'app_rentApproval/disapproved_requests.html', context)
+
+def return_requests(request):
+    return_requests=ReturnRequestModel.objects.filter(m_is_approved='pending')
+    context = {'return_requests':return_requests}
+    return render(request,'app_rentApproval/return_product_rqsts.html',context)

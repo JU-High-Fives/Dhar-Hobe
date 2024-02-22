@@ -8,6 +8,7 @@ urlpatterns = [
     path('view_addproduct_rqsts/disapprove_product/<str:request_id>/',views.disapprove_product,name='disapprove_product'),
     path('admin_page/approved_requests/', views.approved_requests, name='approved_requests'),
     path('admin_page/disapproved_requests/', views.disapproved_requests, name='disapproved_requests'),
+    path('admin_page/return_requests/', views.return_requests, name='return_requests'),
    
 ]
 
