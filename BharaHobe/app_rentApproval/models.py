@@ -167,3 +167,26 @@ class RenteeModel(models.Model):
             A string representation of the renter.
         """
         return self.m_username
+
+class ReturnRequestModel(models.Model):
+    m_rentee = models.ForeignKey(RenteeModel,on_delete=models.CASCADE)
+    m_product = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
+    m_approved_at = models.DateTimeField(null=True, blank=True)
+    REASON_CHOICES = [
+        ('defective', 'Defective'),
+        ('damaged', 'Damaged'),
+        ('incorrect', 'Incorrect'),
+        ('changed_mind', 'Changed Mind'),
+    ]
+
+    IS_APPROVED_CHOICES = (
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('disapproved', 'Disapproved'),
+    )
+    m_is_approved = models.CharField(max_length=20, choices=IS_APPROVED_CHOICES, default='pending')
+    reason = models.CharField(max_length=20, choices=REASON_CHOICES)
+
+    def __str__(self):
+       
+        return "%s %s" % (self.m_rentee, self.m_product)

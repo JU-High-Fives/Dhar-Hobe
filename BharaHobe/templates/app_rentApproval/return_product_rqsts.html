@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1 style="text-align: center;">Pending Return Requests</h1>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Rentee Name</th>
+                <th>Rentee Email</th>
+                <th>Product Name</th>
+                <th>Product Description</th>
+                <th>Reason for Return</th>
+                <th>Approve</th>
+                <th>Disapprove</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- {% for rqst in requests %}
+            <tr>
+                <td>{{ rqst.m_renter.m_username }}</td>
+                <td>{{ rqst.m_renter.m_email }}</td>
+                <td>{{ rqst.m_product.m_name }}</td>
+                <td>{{ rqst.m_product.m_description }}</td>
+                <td>{{ rqst.m_product.m_rental_price }}</td>
+                <td>{{ rqst.m_product.m_quantity_available }}</td>
+                <td>
+                    <form action="#" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="#" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">Disapprove</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %} -->
+        </tbody>
+    </table>
+</div>
+{% endblock %}
