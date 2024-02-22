@@ -6,6 +6,7 @@
 <body>
     <h1>Payment Successful!</h1>
     <p>Order ID: {{ payment.m_order_id }}</p>
-    <button>Checkout</button>
+    <button><a class="navbar-brand fs-4 text-info" href="{% url 'home' %}">Checkout</a>
+    </button>
 </body>
 </html>
