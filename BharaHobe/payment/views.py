@@ -107,34 +107,28 @@ def monthly_payment_view(request, order_id):
         form = monthlyPaymentForm(request.POST)
 
         if form.is_valid():
-            # Extract relevant data from the form
-            total_amount = form.cleaned_data['total_amount']
-            is_success = form.cleaned_data['f_is_success']
+            payment_method = form.cleaned_data['f_payment_method']
 
-            # Get the amounts for each month
-            monthly_amounts = [form.cleaned_data[f'f_month_{i}'] for i in range(1, 7)]
-
-            # Placeholder: Add your logic here to handle the monthly payment data
-            # For example, you might want to store the data in a database, trigger payments, etc.
-
-            # Example: Print the data for demonstration purposes
-            print(f"Order ID: {order_id}")
-            print(f"Total Amount: {total_amount}")
-            print(f"Success: {is_success}")
-            print("Monthly Amounts:")
-            for i, amount in enumerate(monthly_amounts, start=1):
-                print(f"Month {i}: {amount}")
-
-            # Placeholder: Add your actual logic here
-
-            # Redirect to a success page or return a response
-            return render(request, 'success_template.html')
-
+            if payment_method == 'credit_card':
+                card_token = form.cleaned_data['f_card_token']
+                amount_to_pay = form.cleaned_data['f_amount']
+                
+                if amount_to_pay == order.m_monthly_pay:
+                    payment = PaymentModel.objects.create(
+                        m_order_id=order.m_order_id,
+                        m_amount=amount_to_pay,
+                        m_isSuccess=True,
+                        m_payment_method='credit_card',
+                        m_notes=form.cleaned_data['f_notes'],
+                        m_card_token=card_token
+                    )
+                    order.m_total_amount -= amount_to_pay
+                    return render(request, 'payment_success.html', {'payment': payment})
+                else:
+                    return HttpResponseBadRequest("Please pay the exact amount.")
     else:
-        # If it's a GET request, create a new form
         form = monthlyPaymentForm()
-
-    return render(request, 'monthly_payment_form.html', {'form': form, 'order': order})
+        return render(request, 'monthly_payment_form.html', {'form': form, 'order': order})
 
 def emi_payment_view(request):
     """
