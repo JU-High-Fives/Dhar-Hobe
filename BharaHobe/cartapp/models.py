@@ -11,7 +11,7 @@ class Cart(models.Model):
         return f"Cart #{self.id}"
 # cartapp/models.py CartItem Model
 
-from django.db import models
+
 from .models import Cart
 
 class CartItem(models.Model):
@@ -22,6 +22,38 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} x {self.product.name}"
+
+
+
+
+
+from django.contrib.auth.models import User  
+from .models import Product  
+
+class Cart(models.Model):
+    """
+    Represents a user's shopping cart.
+
+    Attributes:
+        user (User): The user who owns the cart.
+        created_at (DateTimeField): The date and time when the cart was created.
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class CartItem(models.Model):
+    """
+    Represents an item in a user's shopping cart.
+
+    Attributes:
+        cart (Cart): The cart to which this item belongs.
+        product (Product): The product associated with this item.
+        quantity (PositiveIntegerField): The quantity of the product in the cart.
+    """
+    cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
 
 
 # The Cart model includes a foreign key to the User model to associate the cart with a specific user. You can adjust this relationship based on your application's requirements.
