@@ -1,45 +1,23 @@
-"""
- Import necessary functions and modules from Django
- Importing the Item model from models.py within the same app
- """
-
 from django.shortcuts import render, redirect
-from .models import Item  
+from .forms import ItemForm, ItemSelectForm
 
-"""
- Define a view function named select_item which renders a page to select items
-"""
-def select_item(request):
-    
-    """
-     Retrieve all items from the database
-    """
-    items = Item.objects.all()
-
-    """
-     Render the select_item.html template with the items context
-    """
-    return render(request, 'selectitem/select_item.html', {'items': items})
-
-   """
- Define a view function named process_selection which processes the selected item
-"""
-def process_selection(request):
-
-    """
-     Check if the request method is POST, which indicates form submission
-
-    """
+def add_item(request):
     if request.method == 'POST':
+        form = ItemForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('item_added_successfully')  # Redirect to a success page
+    else:
+        form = ItemForm()
+    return render(request, 'additem/add_item.html', {'form': form})
 
-        """
-         Retrieve the selected item's ID from the POST data
-        """
-        selected_item_id = request.POST.get('item_id')
-
-        """
-         Process the selected item (e.g., save it to the database, perform further actions)
-         Redirect to a success page after processing
-        """
-        return redirect('success_page')
-
+def select_item(request):
+    if request.method == 'POST':
+        form = ItemSelectForm(request.POST)
+        if form.is_valid():
+            selected_item = form.cleaned_data['item']
+            # Do something with the selected item, e.g., pass it to a template
+            return render(request, 'additem/selected_item.html', {'item': selected_item})
+    else:
+        form = ItemSelectForm()
+    return render(request, 'additem/select_item.html', {'form': form})
