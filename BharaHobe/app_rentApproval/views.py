@@ -119,6 +119,8 @@ def return_requests(request):
     
     return_requests=ReturnRequestModel.objects.filter(m_is_approved='pending')
     
+    if not return_requests:
+        return HttpResponse('No return requests for product is available')
 
     context = {'return_requests':return_requests}
     return render(request,'app_rentApproval/return_product_rqsts.html',context)
