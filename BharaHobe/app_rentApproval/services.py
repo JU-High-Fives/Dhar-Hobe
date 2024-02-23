@@ -70,3 +70,4 @@ class ProductService:
             'Product Disapproval Notification',
             'Dear {renter_name},\n\nYour request to add {product_name} for rent has been disapproved:(.\n\nThank you,\nAdmin,\nDhar Hobe'
         )
+

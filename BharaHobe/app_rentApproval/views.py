@@ -112,7 +112,13 @@ def disapproved_requests(request):
     context = {'disapproved_requests': disapproved_requests}
     return render(request, 'app_rentApproval/disapproved_requests.html', context)
 
+
+
+#SPRINT 2 views for return requests
 def return_requests(request):
+    
     return_requests=ReturnRequestModel.objects.filter(m_is_approved='pending')
+    
+
     context = {'return_requests':return_requests}
     return render(request,'app_rentApproval/return_product_rqsts.html',context)

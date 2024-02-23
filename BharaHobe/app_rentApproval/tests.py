@@ -1,7 +1,7 @@
 from django.test import TestCase, RequestFactory,Client
 from django.contrib.auth.models import User
 from django.urls import reverse
-from .models import RenterModel, ProductModel, RenterProductModel
+from .models import RenterModel, ProductModel, RenterProductModel,RenteeModel,ReturnRequestModel
 from .views import *
 from .views import admin_page
 from .services import EmailService,ProductService
@@ -211,3 +211,42 @@ class DisapprovedRequestsViewTest(TestCase):
         self.assertContains(response, 'Product 1')
         self.assertContains(response, 'Product 2')
         self.assertNotContains(response, 'No disapproved requests')
+
+
+
+
+#Sprint2 testing
+class ReturnRequestViewTest(TestCase):
+    
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.url = reverse('return_requests')
+
+    def test_return_requests(self):
+        rentee = RenteeModel.objects.create(m_username='testuser', m_password='testpassword', m_email='test@example.com',
+                                       m_address='Test Address', m_phone_number='1234567890')
+        product1 = ProductModel.objects.create(m_name='Product 1', m_description='Description 1', m_rental_price=10.0,
+                                          m_quantity_available=5)
+        product2 = ProductModel.objects.create(m_name='Product 2', m_description='Description 2', m_rental_price=15.0,
+                                          m_quantity_available=8)
+        
+        ReturnRequestModel.objects.create(m_rentee=rentee, m_product=product1)
+        ReturnRequestModel.objects.create(m_rentee=rentee, m_product=product2)
+
+        # Create a GET request to the view
+        request = self.factory.get(self.url)
+        request.user = rentee
+        response = return_requests(request)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Product 1')
+        self.assertContains(response, 'Product 2')
+
+    def test_return_requests_with_no_products(self):
+        rentee = RenteeModel.objects.create(m_username='testuser', m_password='testpassword', m_email='test@example.com',
+                                       m_address='Test Address', m_phone_number='1234567890')
+        request = self.factory.get(self.url)
+        request.user = rentee
+        response = return_requests(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'No return requests for product is available')
