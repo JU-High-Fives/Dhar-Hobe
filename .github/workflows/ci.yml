@@ -24,4 +24,6 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Tests
-        run: python BharaHobe/manage.py test payment/tests/
+        run:
+          cd BharaHobe
+          python manage.py test
