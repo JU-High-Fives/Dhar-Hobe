@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from .models import *
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
-from .services import EmailService, ProductService
+from .services import EmailService, ProductService,ReturnService
 from django.utils import timezone
 
 # Create your views here.
@@ -116,6 +116,13 @@ def disapproved_requests(request):
 
 #SPRINT 2 views for return requests
 def return_requests(request):
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        action = request.POST.get('action')
+        
+        return_request = ReturnRequestModel.objects.get(id=request_id)
+        ReturnService().handle_action(action, return_request)
+    
     
     return_requests=ReturnRequestModel.objects.filter(m_is_approved='pending')
     
@@ -124,3 +131,21 @@ def return_requests(request):
 
     context = {'return_requests':return_requests}
     return render(request,'app_rentApproval/return_product_rqsts.html',context)
+
+def approve_return_request(request, request_id):
+    
+    return_request = ReturnRequestModel.objects.get(id=request_id)
+    return_request.m_is_approved = 'approved'
+    return_request.m_approved_at = timezone.now()
+    return_request.save()
+    ReturnService().approve_return_request(return_request)
+    return HttpResponseRedirect(reverse('return_requests'))
+
+def disapprove_return_request(request, request_id):
+    
+    return_request = ReturnRequestModel.objects.get(id=request_id)
+    return_request.m_is_approved = 'disapproved'
+    return_request.m_approved_at = timezone.now()
+    return_request.save()
+    ReturnService().disapprove_return_request(return_request)
+    return HttpResponseRedirect(reverse('return_requests'))

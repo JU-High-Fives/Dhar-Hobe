@@ -71,3 +71,24 @@ class ProductService:
             'Dear {renter_name},\n\nYour request to add {product_name} for rent has been disapproved:(.\n\nThank you,\nAdmin,\nDhar Hobe'
         )
 
+class ReturnService:
+    def approve_return_request(self, return_request):
+     
+        EmailService().send_email(
+            return_request.m_rentee.m_email,
+            return_request.m_product.m_name,
+            return_request.m_rentee.m_username,
+            'Product Return Request Approval Notification',
+            'Dear {renter_name},\n\nYour request to return {product_name}  has been approved.\n\nThank you,\nAdmin,\nDhar Hobe'
+        )
+
+    def disapprove_return_request(self, return_request):
+       
+        # Update the status or perform any other necessary actions
+        EmailService().send_email(
+            return_request.m_rentee.m_email,
+            return_request.m_product.m_name,
+            return_request.m_rentee.m_username,
+            'Product Return Request Disapproval Notification',
+            'Dear {renter_name},\n\nYour request to return {product_name}  has been disapproved.\n\nThank you,\nAdmin,\nDhar Hobe'
+        )

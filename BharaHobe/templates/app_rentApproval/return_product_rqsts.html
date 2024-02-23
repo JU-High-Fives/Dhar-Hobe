@@ -26,13 +26,13 @@
                 <td>{{ rqst.reason }}</td>
                
                 <td>
-                    <form action="#" method="post" style="display: inline;">
+                    <form action="{% url 'approve_return_request' rqst.id %}" method="post" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-sm btn-success">Approve</button>
                     </form>
                 </td>
                 <td>
-                    <form action="#" method="post" style="display: inline;">
+                    <form action="{% url 'disapprove_return_request' rqst.id %}" method="post" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-sm btn-danger">Disapprove</button>
                     </form>
