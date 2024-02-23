@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from .forms import advancePaymentForm
+from ..forms import advancePaymentForm
 
 class TestAdvancePaymentForm(TestCase):
     """

@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import OrderModel
+from ..models import OrderModel
 import unittest
 
 class ShowOrdersViewTests(TestCase):
