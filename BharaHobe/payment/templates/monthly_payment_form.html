@@ -1,10 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Make a Payment</h2>
-    <form method="post" action="">
+    <h2>Make a Monthly Payment</h2>
+    <form method="post" action="{% url 'monthly_payment_form' order_id=order.m_order_id %}">
+        <div>
+            You are making a monthly payment for order number: {{ order.m_order_id }}
+        </div>
+        <div>
+            Order Details:
+            <ul>
+                <li>Total Items: {{ order.m_items }}</li>
+                <li>Total Amount: ${{ order.m_total_amount }}</li>
+            </ul>
+        </div>
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit Payment</button>
+        {{ form.f_order_id }}
+        {{ form.total_amount }}
+        {{ form.f_is_success }}
+        <div>
+            Monthly Amounts:
+            <ul>
+                {% for i in 1|yesno:"1,2,3,4,5,6" %}
+                    <li>Month {{ i }}: {{ form.monthly_amounts.i }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <button type="submit">Submit Monthly Payment</button>
     </form>
 {% endblock %}

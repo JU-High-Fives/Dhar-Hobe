@@ -73,9 +73,56 @@ class advancePaymentForm(forms.Form):
         return cleaned_data
     
 class monthlyPaymentForm(forms.Form):
-    f_order_id = forms.CharField(label='Order ID', required= True)
-    f_amount = forms.DecimalField(label='Monthly amount', min_value=0.01, required= True)
-    f_isSuccess = forms.BooleanField(label='Success', required=False)
+    f_order_id = forms.CharField(label='Order ID', required=True)
+    total_amount = forms.DecimalField(label='Total Amount', min_value=0.01, required=True)
+    f_is_success = forms.BooleanField(label='Success', required=False)
+
+    def __init__(self, *args, **kwargs):
+        """
+        Initialize the form with fields for each month.
+
+        Dynamically adds a DecimalField for each of the 6 months.
+        """
+        super().__init__(*args, **kwargs)
+
+        for i in range(1, 7):
+            self.fields[f'f_month_{i}'] = forms.DecimalField(
+                label=f'Month {i} Amount',
+                min_value=0.01,
+                required=True,
+            )
+
+    def clean_total_amount(self):
+        """
+        Clean and validate the total amount field.
+
+        Returns:
+            Decimal: Valid total amount.
+
+        Raises:
+            ValidationError: If the total amount is invalid.
+        """
+        total_amount = self.cleaned_data.get('total_amount')
+        if total_amount <= 0:
+            raise ValidationError('Total amount must be greater than zero.')
+        return total_amount
+
+    def clean(self):
+        """
+        Additional cleaning logic for the form data.
+
+        Divides the total amount equally among the 6 months.
+
+        Returns:
+            dict: Cleaned form data.
+        """
+        cleaned_data = super().clean()
+        total_amount = cleaned_data.get('total_amount')
+
+        monthly_share = total_amount / 6
+        for i in range(1, 7):
+            cleaned_data[f'f_month_{i}'] = monthly_share
+        return cleaned_data
 
 class emiPaymentForm(forms.Form):
     f_order_id = forms.CharField(label='Order ID', required= True)

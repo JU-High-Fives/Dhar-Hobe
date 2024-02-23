@@ -86,26 +86,55 @@ def advance_payment_view(request, order_id):
         form = advancePaymentForm()
     return render(request, 'advance_payment_form.html', {'form': form, 'order': order})
 
-def monthly_payment_view(request):
+def monthly_payment_view(request, order_id):
     """
-    View for handling monthly payment form.
+    View for processing monthly payments.
+
+    Args:
+        request (HttpRequest): The HTTP request.
+        order_id (int): The ID of the order for which the payment is being made.
 
     Returns:
-        HttpResponse: Rendered template for monthly payment form or payment success.
-    """
+        HttpResponse: Rendered HTML response.
 
+    Raises:
+        None
+
+    """
+    order = get_object_or_404(OrderModel, pk=order_id)
+    
     if request.method == 'POST':
         form = monthlyPaymentForm(request.POST)
 
         if form.is_valid():
-            f_order_id = form.cleaned_data['f_order_id']
-            f_amount = form.cleaned_data['f_amount']
-            f_isSuccess = form.cleaned_data['f_isSuccess']
-            payment = PaymentModel.objects.create(m_order_id=f_order_id, m_amount=f_amount, m_isSuccess=f_isSuccess)
-            return render(request, 'payment_success.html', {'payment': payment})
+            # Extract relevant data from the form
+            total_amount = form.cleaned_data['total_amount']
+            is_success = form.cleaned_data['f_is_success']
+
+            # Get the amounts for each month
+            monthly_amounts = [form.cleaned_data[f'f_month_{i}'] for i in range(1, 7)]
+
+            # Placeholder: Add your logic here to handle the monthly payment data
+            # For example, you might want to store the data in a database, trigger payments, etc.
+
+            # Example: Print the data for demonstration purposes
+            print(f"Order ID: {order_id}")
+            print(f"Total Amount: {total_amount}")
+            print(f"Success: {is_success}")
+            print("Monthly Amounts:")
+            for i, amount in enumerate(monthly_amounts, start=1):
+                print(f"Month {i}: {amount}")
+
+            # Placeholder: Add your actual logic here
+
+            # Redirect to a success page or return a response
+            return render(request, 'success_template.html')
+
     else:
+        # If it's a GET request, create a new form
         form = monthlyPaymentForm()
-    return render(request, 'monthly_payment_form.html', {'form': form})
+
+    return render(request, 'monthly_payment_form.html', {'form': form, 'order': order})
 
 def emi_payment_view(request):
     """
