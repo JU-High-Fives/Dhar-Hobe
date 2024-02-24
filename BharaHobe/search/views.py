@@ -1,35 +1,88 @@
-from django.shortcuts import render, redirect
-from .forms import paymentForm
-from .models import PaymentModel
+# views.py
+from django.shortcuts import render
+from .models import Product
 
-def make_payment(request):
-    """This functions renders to the make payment page and shows a payment form 
+def search_view(request):
+    """
+    Renders the search form.
+
+    This view renders the search form template.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
 
     Returns:
-        form: Payment Form 
+        HttpResponse: The rendered search form template.
     """
-    if request.method == 'POST':
-        form = paymentForm(request.POST)
+    return render(request, 'search_form.html')
+
+def search_results_view(request):
+    """
+    Renders the search results.
+
+    This view performs a search query based on the provided query parameter
+    and renders the search results template.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered search results template.
+    """
+    query = request.GET.get('q')
+    results = Product.objects.filter(name__icontains=query)
+    return render(request, 'search_results.html', {'results': results, 'query': query})
+
+def search(request):
+    """
+    Performs a search query and renders the search results.
+
+    This view handles both GET and POST requests. If the request is a GET
+    request, it retrieves the search query from the request parameters and
+    performs a search query. If the request is a POST request, it retrieves
+    the search query from the form data, performs a search query, and renders
+    the search results template.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered search results template.
+    """
+    query = request.GET.get('q')
+    results = []
+    
+    if query:
+        # Perform search query
+        results = Product.objects.filter(name__icontains=query)
+    
+    return render(request, 'search_results.html', {'results': results, 'query': query})
+
+from django.shortcuts import render
+from .forms import SearchForm
+from .models import Product
+
+def search_view(request):
+    """
+    Renders the search form.
+
+    This view renders the search form template, handling both GET and POST
+    requests. If the request is a GET request, it initializes a new search
+    form. If the request is a POST request, it validates the form data,
+    performs a search query, and renders the search results template.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered search form template or search results template.
+    """
+    if request.method == 'GET':
+        form = SearchForm(request.GET)
         if form.is_valid():
-            f_order_id = form.cleaned_data['f_order_id']
-            f_amount = form.cleaned_data['f_amount']
-            f_isSuccess = form.cleaned_data['f_isSuccess']
-            payment = PaymentModel.objects.create(m_order_id=f_order_id, m_amount=f_amount, m_isSuccess=f_isSuccess)
-            return render(request, 'payment_success.html', {'payment': payment})
+            query = form.cleaned_data['query']
+            results = Product.objects.filter(name__icontains=query)
+            return render(request, 'search_results.html', {'form': form, 'results': results, 'query': query})
     else:
-        form = paymentForm()
-
-    return render(request, 'make_payment.html', {'form': form})
-
-def payment_success(request):
-    """This function renders the payment success page.
-
-    Displays details of the successful payment.
-
-    Returns:
-        HttpResponse: Rendered template for payment success
-    """
-    latest_payment = PaymentModel.objects.filter(m_isSuccess=True).order_by('-id').first()
-
-    return render(request, 'payment_success.html', {'latest_payment': latest_payment})
-
+        form = SearchForm()
+    return render(request, 'search_form.html', {'form': form})
