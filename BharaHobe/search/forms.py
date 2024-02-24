@@ -1,6 +1,15 @@
+# forms.py
 from django import forms
+from .models import Product
 
-class paymentForm(forms.Form):
-    f_order_id = forms.CharField(label='Order ID', required= True)
-    f_amount = forms.DecimalField(label='Amount', min_value=0.01, required= True)
-    f_isSuccess = forms.BooleanField(label='Success', required=False)
+class SearchForm(forms.Form):
+    """
+    Form for searching products.
+
+    This form allows users to enter a search query to find products.
+
+    Attributes:
+        query (str): The search query entered by the user.
+    """
+
+    query = forms.CharField(label='Search', max_length=100)
