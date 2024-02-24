@@ -1,7 +1,10 @@
+# urls.py
 from django.urls import path
-from .views import make_payment, payment_success
+from . import views
+
+app_name = 'search'
 
 urlpatterns = [
-    path('make-payment/', make_payment, name='make_payment'),
-    path('payment-success/', payment_success, name='payment_success'),
+    path('', views.search_view, name='search'),
+    path('results/', views.search_results_view, name='search_results'),
 ]
