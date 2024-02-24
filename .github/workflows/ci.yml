@@ -26,8 +26,4 @@ jobs:
       - name: Run Tests
         run: |
           cd BharaHobe
-<<<<<<< HEAD
           python manage.py test
-=======
-          python manage.py test
->>>>>>> ce3e5df9c984bda255d0e4fd062233890b72fa02
