@@ -6,14 +6,14 @@ class Item(models.Model):
     Model representing an item in the system.
 
     Fields:
-        name (CharField): The name of the item.
-        description (TextField): Description of the item.
-        price (DecimalField): Price of the item.
+        m_name (CharField): The name of the item.
+        m_description (TextField): Description of the item.
+        m_price (DecimalField): Price of the item.
         Add other fields as needed for the item.
     """
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    m_name = models.CharField(max_length=100)
+    m_description = models.TextField()
+    m_price = models.DecimalField(max_digits=10, decimal_places=2)
     # Add other fields as needed
 
 class ReturnRequest(models.Model):
@@ -43,11 +43,11 @@ class ReturnRequest(models.Model):
         ('approved', 'Approved'),
         ('rejected', 'Rejected'),
     ]
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    reason = models.CharField(max_length=20, choices=REASON_CHOICES)
-    desired_resolution = models.CharField(max_length=20)
-    supporting_evidence = models.TextField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    m_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    m_item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    m_reason = models.CharField(max_length=20, choices=REASON_CHOICES)
+    m_desired_resolution = models.CharField(max_length=20)
+    m_supporting_evidence = models.TextField()
+    m_status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    m_created_at = models.DateTimeField(auto_now_add=True)
+    m_updated_at = models.DateTimeField(auto_now=True)
