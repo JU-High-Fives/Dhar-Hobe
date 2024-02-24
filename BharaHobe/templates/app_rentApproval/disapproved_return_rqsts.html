@@ -14,15 +14,15 @@
                 <th>Disapproval Date & Time</th>
             </tr>
         </thead>
-        <!-- <tbody>
-            {% for request in disapproved_requests %}
+        <tbody>
+            {% for request in disapproved_rqsts %}
                 <tr>
-                    <td>{{ request.m_renter.m_username }}</td>
+                    <td>{{ request.m_rentee.m_username }}</td>
                     <td>{{ request.m_product.m_name }}</td>
                     <td>{{ request.m_approved_at }}</td>
                 </tr>
             {% endfor %}
-        </tbody> -->
+        </tbody>
     </table>
 </div>
 {% endblock %}

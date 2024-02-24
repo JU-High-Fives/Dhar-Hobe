@@ -11,6 +11,8 @@ urlpatterns = [
     path('admin_page/return_requests/', views.return_requests, name='return_requests'),
     path('return_requests/approve_return_request/<str:request_id>/',views.approve_return_request,name='approve_return_request'),
     path('return_requests/disapprove_return_request/<str:request_id>/',views.disapprove_return_request,name='disapprove_return_request'),
+    path('admin_page/approved_return_rqsts/', views.approved_return_rqsts, name='approved_return_rqsts'),
+    path('admin_page/disapproved_return_rqsts/', views.disapproved_return_rqsts, name='disapproved_return_rqsts'),
    
 ]
 

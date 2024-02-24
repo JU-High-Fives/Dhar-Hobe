@@ -1,10 +1,12 @@
 from django.test import TestCase, RequestFactory,Client
 from django.contrib.auth.models import User
 from django.urls import reverse
+from unittest.mock import patch
+
 from .models import RenterModel, ProductModel, RenterProductModel,RenteeModel,ReturnRequestModel
 from .views import *
 from .views import admin_page
-from .services import EmailService,ProductService
+from .services import EmailService,ProductService,ReturnService
 
 class AddProductRqstsViewTest(TestCase):
     """
@@ -214,7 +216,8 @@ class DisapprovedRequestsViewTest(TestCase):
 
 
 
-
+#------------------------------------------------------------------------------------------------------------------------------------
+#\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 #Sprint2 testing
 class ReturnRequestViewTest(TestCase):
     
@@ -250,3 +253,9 @@ class ReturnRequestViewTest(TestCase):
         response = return_requests(request)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'No return requests for product is available')
+
+
+
+
+
+

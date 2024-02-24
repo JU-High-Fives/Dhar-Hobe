@@ -113,7 +113,7 @@ def disapproved_requests(request):
     return render(request, 'app_rentApproval/disapproved_requests.html', context)
 
 
-
+#---------------------------------------------------------------------------------------------------------------------------------
 #SPRINT 2 views for return requests
 def return_requests(request):
     if request.method == 'POST':
@@ -142,10 +142,19 @@ def approve_return_request(request, request_id):
     return HttpResponseRedirect(reverse('return_requests'))
 
 def disapprove_return_request(request, request_id):
-    
     return_request = ReturnRequestModel.objects.get(id=request_id)
     return_request.m_is_approved = 'disapproved'
     return_request.m_approved_at = timezone.now()
     return_request.save()
     ReturnService().disapprove_return_request(return_request)
     return HttpResponseRedirect(reverse('return_requests'))
+
+def approved_return_rqsts(request):
+    approved_rqsts = ReturnRequestModel.objects.filter(m_is_approved='approved')
+    context = {'approved_rqsts': approved_rqsts}
+    return render(request, 'app_rentApproval/approved_return_rqsts.html', context)
+
+def disapproved_return_rqsts(request):
+    disapproved_rqsts = ReturnRequestModel.objects.filter(m_is_approved='disapproved')
+    context = {'disapproved_rqsts': disapproved_rqsts}
+    return render(request, 'app_rentApproval/disapproved_return_rqsts.html', context)
