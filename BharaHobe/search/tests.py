@@ -5,9 +5,9 @@ from .models import Product
 class SearchViewTests(TestCase):
     def setUp(self):
         # Create some sample products for testing
-        Product.objects.create(name='Product 1', description='Description 1')
-        Product.objects.create(name='Product 2', description='Description 2')
-        Product.objects.create(name='Product 3', description='Description 3')
+        Product.objects.create(name='Product 1', description='Description 1', price=10.99)
+        Product.objects.create(name='Product 2', description='Description 2', price=20.99)
+        Product.objects.create(name='Product 3', description='Description 3', price=30.99)
 
     def test_search_view(self):
         """
