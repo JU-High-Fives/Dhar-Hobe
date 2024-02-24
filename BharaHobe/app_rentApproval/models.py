@@ -167,8 +167,21 @@ class RenteeModel(models.Model):
             A string representation of the renter.
         """
         return self.m_username
-
+#--------------------------------------------------------------------------------
+#Sprint 2 
 class ReturnRequestModel(models.Model):
+    """
+    Model representing a return request for a rented product.
+
+    Attributes:
+        m_rentee (ForeignKey to RenteeModel): The rentee who is requesting the return.
+        m_product (ForeignKey to ProductModel): The product being returned.
+        m_approved_at (DateTimeField): The date and time when the return request was approved.
+        REASON_CHOICES (list of tuples): Choices for the reason for return.
+        IS_APPROVED_CHOICES (tuple of tuples): Choices for the approval status of the return request.
+        m_is_approved (CharField): The approval status of the return request.
+        reason (CharField): The reason for the return.
+    """
     m_rentee = models.ForeignKey(RenteeModel,on_delete=models.CASCADE)
     m_product = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     m_approved_at = models.DateTimeField(null=True, blank=True)
@@ -188,5 +201,10 @@ class ReturnRequestModel(models.Model):
     reason = models.CharField(max_length=20, choices=REASON_CHOICES)
 
     def __str__(self):
-       
+        """
+        String representation of the return request.
+
+        Returns:
+            str: A string representing the return request.
+        """
         return "%s %s" % (self.m_rentee, self.m_product)

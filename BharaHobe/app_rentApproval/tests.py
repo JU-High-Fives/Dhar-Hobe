@@ -220,12 +220,27 @@ class DisapprovedRequestsViewTest(TestCase):
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 #Sprint2 testing
 class ReturnRequestViewTest(TestCase):
-    
+    """
+    Test case for the view handling return requests.
+
+    Attributes:
+        factory (RequestFactory): An instance of RequestFactory for creating mock requests.
+        url (str): The URL of the return requests view.
+    """
     def setUp(self):
+        """
+        Set up method to initialize common resources for testing.
+        """
         self.factory = RequestFactory()
         self.url = reverse('return_requests')
 
     def test_return_requests(self):
+        """
+        Test case to check if return requests are displayed correctly.
+
+        Creates mock rentee, products, and return requests.
+        Verifies that the view displays the return requests correctly.
+        """
         rentee = RenteeModel.objects.create(m_username='testuser', m_password='testpassword', m_email='test@example.com',
                                        m_address='Test Address', m_phone_number='1234567890')
         product1 = ProductModel.objects.create(m_name='Product 1', m_description='Description 1', m_rental_price=10.0,
@@ -246,6 +261,12 @@ class ReturnRequestViewTest(TestCase):
         self.assertContains(response, 'Product 2')
 
     def test_return_requests_with_no_products(self):
+        """
+        Test case to check behavior when no return requests are available.
+
+        Creates a mock rentee.
+        Verifies that the view displays a message when no return requests are available.
+        """
         rentee = RenteeModel.objects.create(m_username='testuser', m_password='testpassword', m_email='test@example.com',
                                        m_address='Test Address', m_phone_number='1234567890')
         request = self.factory.get(self.url)
