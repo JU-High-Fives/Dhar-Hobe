@@ -23,17 +23,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Tests for BharaHobe
+      - name: Run Tests
         run: |
           cd BharaHobe
-          python manage.py test
-
-      - name: Run Tests for cartapp
-        run: |
-          cd BharaHobe/cartapp  # Navigate to the cartapp directory
-          python manage.py test
-
-      - name: Run Tests for search
-        run: |
-          cd BharaHobe/search  # Navigate to the search directory
           python manage.py test
