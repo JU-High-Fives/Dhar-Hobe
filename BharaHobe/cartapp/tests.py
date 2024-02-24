@@ -1,38 +1,63 @@
-from django.test import TestCase, Client
+import pytest
+from django.contrib.auth.models import User
 from django.urls import reverse
-from .models import Product, Cart
+from rest_framework import status
+from rest_framework.test import APIClient
+from .models import Product, Cart, CartItem
 
-class AddToCartIntegrationTest(TestCase):
-    def setUp(self):
-        # Create a test user (optional)
-        self.user = User.objects.create(username='test_user')
+@pytest.fixture
+def api_client():
+    """
+    Fixture to create an instance of Django's APIClient for making API requests.
+    """
+    return APIClient()
 
-        # Create a test product
-        self.product = Product.objects.create(name='Test Product', price=100)
+@pytest.fixture
+def test_user():
+    """
+    Fixture to create a test user.
+    """
+    return User.objects.create_user(username='test_user', password='password')
 
-    def test_add_to_cart(self):
-        client = Client()
+@pytest.fixture
+def test_product():
+    """
+    Fixture to create a test product.
+    """
+    return Product.objects.create(name='Test Product', price=100)
 
-        # Simulate adding the product to the cart
-        response = client.post(reverse('add_to_cart'), {'product_id': self.product.id}, follow=True)
+@pytest.mark.django_db
+def test_add_to_cart(api_client, test_user, test_product):
+    """
+    Test function to verify adding a product to the cart.
+    """
+    # Login the test user
+    api_client.force_authenticate(user=test_user)
 
-        # Check if the product was added successfully
-        self.assertEqual(response.status_code, 200)
+    # Send a POST request to add the product to the cart
+    response = api_client.post(reverse('add_to_cart'), {'product_id': test_product.id})
 
-        # Check if the cart contains the added product
-        cart_items = Cart.objects.filter(user=self.user)
-        self.assertTrue(cart_items.exists())
-        self.assertEqual(cart_items.first().product, self.product)
+    # Check if the response status code is 200 OK
+    assert response.status_code == status.HTTP_200_OK
 
-    def test_add_to_cart_invalid_product(self):
-        client = Client()
+    # Check if the product was added to the cart
+    cart = Cart.objects.get(user=test_user)
+    assert cart.cart_items.filter(product=test_product).exists()
 
-        # Simulate adding an invalid product to the cart
-        response = client.post(reverse('add_to_cart'), {'product_id': 999}, follow=True)
+@pytest.mark.django_db
+def test_add_to_cart_invalid_product(api_client, test_user):
+    """
+    Test function to verify adding an invalid product to the cart.
+    """
+    # Login the test user
+    api_client.force_authenticate(user=test_user)
 
-        # Check if the response indicates failure
-        self.assertEqual(response.status_code, 404)
+    # Send a POST request to add an invalid product to the cart
+    response = api_client.post(reverse('add_to_cart'), {'product_id': 999})
 
-        # Check if the cart remains empty
-        cart_items = Cart.objects.filter(user=self.user)
-        self.assertFalse(cart_items.exists())
+    # Check if the response status code is 404 Not Found
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    # Check if the cart remains empty
+    cart = Cart.objects.get(user=test_user)
+    assert cart.cart_items.count() == 0
