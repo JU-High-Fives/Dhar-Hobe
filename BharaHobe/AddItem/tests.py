@@ -18,6 +18,7 @@ class AddItemTestCase(TestCase):
         Define valid item data
         """
         
+        
         item_data = {
             'name': 'Test Item',
             'description': 'This is a test item',
