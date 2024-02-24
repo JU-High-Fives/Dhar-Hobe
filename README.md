@@ -1,5 +1,10 @@
 # Dhar Hobe - A Bangladeshi Product Renting System
-![2305 q702 006 F m005 c7 addiction  Converted](https://github.com/JU-High-Fives/Dhar-Hobe/assets/51522304/5882052d-6376-4734-85f6-870f35809391)
+<p align="center">
+  <img src="https://github.com/JU-High-Fives/Dhar-Hobe/raw/66ba0ce31a3d514fef39cb7b3a0345c176c27743/resources/Dhar%20Hobe%20Image%20by%20SB.png" alt="Description of image" width="600" height="400">
+</p>
+
+
+
 
 ## Team Name: JU_High_Fives
 
