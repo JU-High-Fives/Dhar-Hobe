@@ -1,53 +1,38 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
-from .models import Product
+from .models import Product, Cart
 
-class SearchViewTests(TestCase):
+class AddToCartIntegrationTest(TestCase):
     def setUp(self):
-        # Create some sample products for testing
-        Product.objects.create(name='Product 1', description='Description 1')
-        Product.objects.create(name='Product 2', description='Description 2')
-        Product.objects.create(name='Product 3', description='Description 3')
+        # Create a test user (optional)
+        self.user = User.objects.create(username='test_user')
 
-    def test_search_view(self):
-        """
-        Test the search view.
+        # Create a test product
+        self.product = Product.objects.create(name='Test Product', price=100)
 
-        Checks that the view renders the correct template and returns a 200 OK status code.
-        """
-        url = reverse('search_results')
-        response = self.client.get(url)
+    def test_add_to_cart(self):
+        client = Client()
 
+        # Simulate adding the product to the cart
+        response = client.post(reverse('add_to_cart'), {'product_id': self.product.id}, follow=True)
+
+        # Check if the product was added successfully
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'search_results.html')
 
-    def test_search_results(self):
-        """
-        Test search results with a valid query.
+        # Check if the cart contains the added product
+        cart_items = Cart.objects.filter(user=self.user)
+        self.assertTrue(cart_items.exists())
+        self.assertEqual(cart_items.first().product, self.product)
 
-        Checks that the search view returns the correct search results.
-        """
-        url = reverse('search_results')
-        response = self.client.get(url, {'q': 'Product 1'})
+    def test_add_to_cart_invalid_product(self):
+        client = Client()
 
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'search_results.html')
+        # Simulate adding an invalid product to the cart
+        response = client.post(reverse('add_to_cart'), {'product_id': 999}, follow=True)
 
-        products = response.context['results']
-        self.assertEqual(products.count(), 1)
-        self.assertEqual(products[0].name, 'Product 1')
+        # Check if the response indicates failure
+        self.assertEqual(response.status_code, 404)
 
-    def test_search_results_no_results(self):
-        """
-        Test search results with no results.
-
-        Checks that the search view returns no results for a non-existent query.
-        """
-        url = reverse('search_results')
-        response = self.client.get(url, {'q': 'Non-existent Product'})
-
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'search_results.html')
-
-        products = response.context['results']
-        self.assertEqual(products.count(), 0)
+        # Check if the cart remains empty
+        cart_items = Cart.objects.filter(user=self.user)
+        self.assertFalse(cart_items.exists())
