@@ -13,4 +13,5 @@ class Product(models.Model):
     
     # We write test methods to test specific aspects of the Product model, such as its __str__ method and attribute values.
 
-
+    class Meta:
+        app_label = 'rentapp'
