@@ -142,3 +142,9 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     # other apps
 ]
+
+INSTALLED_APPS = [
+    ...
+    'django.contrib.contenttypes',
+    ...
+]
