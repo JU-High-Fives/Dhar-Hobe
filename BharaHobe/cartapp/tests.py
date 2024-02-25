@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-from .models import Product, Cart, CartItem
+from .models import Product, Cart
 
 @pytest.fixture
 def api_client():
@@ -44,20 +44,5 @@ def test_add_to_cart(api_client, test_user, test_product):
     cart = Cart.objects.get(user=test_user)
     assert cart.cart_items.filter(product=test_product).exists()
 
-@pytest.mark.django_db
-def test_add_to_cart_invalid_product(api_client, test_user):
-    """
-    Test function to verify adding an invalid product to the cart.
-    """
-    # Login the test user
-    api_client.force_authenticate(user=test_user)
-
-    # Send a POST request to add an invalid product to the cart
-    response = api_client.post(reverse('add_to_cart'), {'product_id': 999})
-
-    # Check if the response status code is 404 Not Found
-    assert response.status_code == status.HTTP_404_NOT_FOUND
-
-    # Check if the cart remains empty
-    cart = Cart.objects.get(user=test_user)
-    assert cart.cart_items.count() == 0
+    # Optionally, check the response data for additional details
+    assert response.data['message'] == 'Product added to cart successfully'

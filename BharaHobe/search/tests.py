@@ -51,3 +51,5 @@ class SearchViewTests(TestCase):
 
         products = response.context['results']
         self.assertEqual(products.count(), 0)
+
+    # You may consider adding more test cases here to cover additional scenarios
