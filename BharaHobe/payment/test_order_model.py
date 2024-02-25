@@ -26,7 +26,7 @@ class ShowOrdersViewTests(TestCase):
             m_notes='Some notes for the order'
         )
         self.duplicate_order = OrderModel.objects.create(
-            m_order_id='654321',  # Choose a unique order ID
+            m_order_id='123456', 
             m_items='Another Item',
             m_total_amount=30.75,
         )
@@ -46,6 +46,11 @@ class ShowOrdersViewTests(TestCase):
     def test_order_str_representation(self):
         """Check whether the order ID representation is correct."""
         self.assertEqual(str(self.order), "Order #123456")
+
+    def test_order_unique_constraint(self):
+        """Ensure that an order ID is unique."""
+        with self.assertRaises(Exception):
+            self.duplicate_order.save()
 
     def test_order_notes_blank_or_null(self):
         """Check that the note field can be empty for order creation."""  

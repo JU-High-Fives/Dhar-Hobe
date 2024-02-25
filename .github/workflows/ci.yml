@@ -3,7 +3,7 @@ name: Django CI
 on:
   push:
     branches:
-      - rent_sanzida
+      - rent_jannat
 
 jobs:
   test:

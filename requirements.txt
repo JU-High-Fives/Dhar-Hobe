@@ -1,5 +1,3 @@
 django
 stripe
 setuptools
-pytest
-pytest-django
