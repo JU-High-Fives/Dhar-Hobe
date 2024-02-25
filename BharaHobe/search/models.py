@@ -26,3 +26,10 @@ class Product(models.Model):
             str: The name of the product.
         """
         return self.name
+from django.contrib.contenttypes.models import ContentType as DjangoContentType
+
+class CustomContentType(DjangoContentType):
+    class Meta:
+        app_label = 'contenttypes'
+        proxy = True
+
