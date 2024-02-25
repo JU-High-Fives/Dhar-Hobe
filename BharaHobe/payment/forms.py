@@ -33,15 +33,10 @@ class advancePaymentForm(forms.Form):
             bool: True if the credit card is valid, False otherwise.
         """
         
-        if not (CreditCard(credit_card).is_valid() 
-                and CreditCard(credit_card).is_luhn_valid() 
-                and credit_card.isdigit() 
-                and len(credit_card) == 16
-                ):
-            return True
+        if CreditCard(credit_card).is_valid() and CreditCard(credit_card).is_luhn_valid() and credit_card.isdigit() and len(credit_card) == 16:
+            return False  # Return False if the credit card is valid
         else:
-            return False
-
+            return True
     def clean_credit_card_number(self):
         """
         Clean and validate the credit card number field.
@@ -103,15 +98,11 @@ class monthlyPaymentForm(forms.Form):
             bool: True if the credit card is valid, False otherwise.
         """
         
-        if not (CreditCard(credit_card).is_valid() 
-                and CreditCard(credit_card).is_luhn_valid() 
-                and credit_card.isdigit() 
-                and len(credit_card) == 16
-                ):
-            return True
+        if CreditCard(credit_card).is_valid() and CreditCard(credit_card).is_luhn_valid() and credit_card.isdigit() and len(credit_card) == 16:
+            return False  # Return False if the credit card is valid
         else:
-            return False
-
+            return True
+        
     def clean_credit_card_number(self):
         """
         Clean and validate the credit card number field.
