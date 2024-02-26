@@ -31,5 +31,6 @@ urlpatterns = [
     path('delivery-requests/', include('delivery.urls', namespace='delivery_requests')),
     path('return/', include('return.urls')),
 
-] + static('/docs/', document_root=settings.SPHINX_BUILD_DIR)
+] 
+# + static('/docs/', document_root=settings.SPHINX_BUILD_DIR)
 
