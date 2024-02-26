@@ -87,16 +87,21 @@ Batch 48, Department of Computer Science & Engineering, Jahangirnagar University
 - Push changes to the remote repository:
   `git push origin <new_branch_name>`
 
-## 4. Create a Pull Request:
+## 4. Check CI:
+- Go to Github Actions
+- Click on a pipeline
+- Click on test
+
+## 5. Create a Pull Request:
 - Create a Pull Request from new branch to the main development branch.
 - [Watch this](https://youtu.be/8lGpZkjnkt4?si=wWhlt5uIpKkMVsMT)
 
-## 5. Review and Merge:
+## 6. Review and Merge:
 - Collaborators will review changes in the Pull Request.
 - If approved, merge changes into the main branch.
 - [Watch this](https://youtu.be/OVQK2zzb6U8?si=5dcqy_z1v0TbbdLS)
 
-## 6. Update Local Repository:
+## 7. Update Local Repository:
 - Switch back to the main branch:
   `git checkout main`
 
