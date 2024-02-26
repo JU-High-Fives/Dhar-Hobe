@@ -1,5 +1,5 @@
 from django import forms
-from .models import ReturnRequest
+from . models import ReturnRequest
 
 class ReturnRequestForm(forms.ModelForm):
     """

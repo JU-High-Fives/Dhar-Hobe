@@ -14,7 +14,6 @@ class Item(models.Model):
     m_name = models.CharField(max_length=100)
     m_description = models.TextField()
     m_price = models.DecimalField(max_digits=10, decimal_places=2)
-    # Add other fields as needed
 
 class ReturnRequest(models.Model):
     """
