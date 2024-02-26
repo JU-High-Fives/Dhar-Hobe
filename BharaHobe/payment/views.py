@@ -123,6 +123,7 @@ def monthly_payment_view(request, order_id):
                         m_card_token=card_token
                     )
                     order.m_total_amount -= amount_to_pay
+                    order.save()
                     return render(request, 'payment_success.html', {'payment': payment})
                 else:
                     return HttpResponseBadRequest("Please pay the exact amount.")
