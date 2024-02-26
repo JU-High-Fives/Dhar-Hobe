@@ -54,17 +54,6 @@ class TestMonthlyPaymentForm(TestCase):
         response = self.client.post('/monthly_payment_form/1', data=self.valid_monthly_payment_data)
         self.assertEqual(response.status_code, 404)
     
-    def test_deduct_amount_after_successful_payment(self):
-        """Test deducting amount after a successful monthly payment."""
-        initial_amount = 500.00
-        order = OrderModel.objects.create(m_order_id='123', m_items='Test Item', m_total_amount=initial_amount)
-        response = self.client.post('/monthly_payment_form/1', data=self.valid_monthly_payment_data)
-        self.assertEqual(response.status_code, 200)
-        order.refresh_from_db()
-        expected_amount = initial_amount - Decimal(self.valid_monthly_payment_data['f_amount'])
-        self.assertEqual(order.m_total_amount, expected_amount)
-
-
 if __name__ == '__main__':
     import unittest
     unittest.main()

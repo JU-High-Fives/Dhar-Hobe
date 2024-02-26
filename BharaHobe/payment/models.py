@@ -8,11 +8,10 @@ class OrderModel(models.Model):
 
     def __init__(self, *args, **kwargs):
         super(OrderModel, self).__init__(*args, **kwargs)
-        if not self.m_monthly_pay:
-            if self.m_total_amount:
-                self.m_monthly_pay = self.m_total_amount // 6
-            else:
-                self.m_monthly_pay = 0
+        if self.m_total_amount:
+            self.m_monthly_pay = self.m_total_amount // 6
+        else:
+            self.m_monthly_pay = 0
 
     def __str__(self):
         return f"Order #{self.m_order_id}"
