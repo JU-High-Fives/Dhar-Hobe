@@ -1,5 +1,3 @@
-# cartapp/models.py
-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -33,8 +31,8 @@ class CartItem(models.Model):
         quantity (PositiveIntegerField): The quantity of the product in the cart.
         created_at (DateTimeField): The date and time when the cart item was created.
     """
-    cart = models.ForeignKey('Cart', on_delete=models.CASCADE)  # Using a string reference to avoid circular import
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)  # Assuming Product model is defined elsewhere
+    cart = models.ForeignKey('Cart', on_delete=models.CASCADE)
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -46,15 +44,3 @@ class CartItem(models.Model):
             str: A string representation of the cart item.
         """
         return f"{self.quantity} x {self.product.name}"
-
-
-# cartapp/__init__.py
-# Leave this file empty unless you have specific initialization code.
-
-
-# cartapp/views.py
-# Add views related to the cart here.
-
-
-# cartapp/urls.py
-# Define URLs related to the cart here.
