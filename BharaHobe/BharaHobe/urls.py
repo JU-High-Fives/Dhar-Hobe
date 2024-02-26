@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from rentapp import views
+from django.views.generic import TemplateView 
 
 
 urlpatterns = [
@@ -29,5 +30,6 @@ urlpatterns = [
     # Include delivery request app URLs
     path('delivery-requests/', include('delivery.urls', namespace='delivery_requests')),
     path('return/', include('return.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+] + static('/docs/', document_root=settings.SPHINX_BUILD_DIR)
 
