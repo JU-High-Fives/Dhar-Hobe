@@ -2,6 +2,7 @@
 <p align="center">
   <img src="https://github.com/JU-High-Fives/Dhar-Hobe/raw/66ba0ce31a3d514fef39cb7b3a0345c176c27743/resources/Dhar%20Hobe%20Image%20by%20SB.png" alt="Description of image" width="600" height="400">
 </p>
+
 ## Team Name: JU_High_Fives
 
 Batch 48, Department of Computer Science & Engineering, Jahangirnagar University, Bangladesh
